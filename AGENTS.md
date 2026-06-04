@@ -102,6 +102,7 @@ Generated targets:
 - Cursor: `.cursor/rules`, `.cursor/agents`, `.cursor/skills`, `.cursor/mcp.json`.
 - Codex: `.codex/config.toml`, `.codex/AGENTS.md`, `.agents/skills`.
 - GitHub Copilot: `.github/copilot-instructions.md`, `.github/instructions`, `.github/prompts`.
+- Hermes Agent: `.hermes/config.yaml`, `.hermes/skills`, `.hermes/AGENTS.md`, `.hermes/README.md`.
 
 Do not edit generated vendor files by hand. Edit the canonical source and regenerate.
 
