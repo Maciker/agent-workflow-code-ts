@@ -24,6 +24,10 @@ const requiredFiles = [
   '.codex/hooks/post_tool_use_quality_hint.mjs',
   '.agents/skills/architecture-hexagonal/SKILL.md',
   '.agents/skills/design-principles/SKILL.md',
+  '.hermes/config.yaml',
+  '.hermes/README.md',
+  '.hermes/AGENTS.md',
+  '.hermes/skills/architecture-hexagonal/SKILL.md',
 ];
 
 const listFiles = (dir, predicate = () => true) => {
@@ -70,11 +74,13 @@ for (const agentName of aiAgents.map((name) => name.replace(/\.md$/, ''))) {
 const aiSkills = listDirs('.ai/skills').map((path) => basename(path)).sort();
 const cursorSkills = listDirs('.cursor/skills').map((path) => basename(path)).sort();
 const portableSkills = listDirs('.agents/skills').map((path) => basename(path)).sort();
+const hermesSkills = listDirs('.hermes/skills').map((path) => basename(path)).sort();
 if (aiSkills.join('|') !== cursorSkills.join('|')) fail('Cursor skills are not synchronized with .ai/skills');
 if (aiSkills.join('|') !== portableSkills.join('|')) fail('Portable .agents skills are not synchronized with .ai/skills');
+if (aiSkills.join('|') !== hermesSkills.join('|')) fail('Hermes skills are not synchronized with .ai/skills');
 
 for (const skill of aiSkills) {
-  for (const rootDir of ['.cursor/skills', '.agents/skills']) {
+  for (const rootDir of ['.cursor/skills', '.agents/skills', '.hermes/skills']) {
     const skillPath = join(root, rootDir, skill, 'SKILL.md');
     if (!existsSync(skillPath)) fail(`missing ${rootDir}/${skill}/SKILL.md`);
   }
@@ -95,6 +101,7 @@ const generatedFiles = [
   join(root, '.codex/config.toml'),
   join(root, '.codex/hooks.json'),
   ...listFiles('.codex/agents'),
+  join(root, '.hermes/config.yaml'),
 ];
 const forbiddenSecretPatterns = [/sk-[A-Za-z0-9]{20,}/, /ghp_[A-Za-z0-9]{20,}/, /github_pat_[A-Za-z0-9_]{20,}/];
 for (const file of generatedFiles) {
