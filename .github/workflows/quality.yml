@@ -1,0 +1,80 @@
+name: quality
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deterministic-quality:
+    name: Deterministic quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Initialize ratchet baselines if absent
+        run: |
+          if [ ! -f quality/baselines/eslint.json ]; then pnpm quality:init; fi
+      - name: Run deterministic quality gates
+        run: pnpm quality:ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-report
+          path: .quality
+
+  cross-model-qa:
+    name: Cross-model QA gate
+    runs-on: ubuntu-latest
+    needs: deterministic-quality
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run cross-model QA gate
+        env:
+          QA_REVIEW_JSON_B64: ${{ secrets.QA_REVIEW_JSON_B64 }}
+        run: |
+          set -eu
+          mkdir -p .ai/workspace/qa/outputs
+          if [ -n "${QA_REVIEW_JSON_B64:-}" ]; then
+            printf '%s' "$QA_REVIEW_JSON_B64" | base64 -d > .ai/workspace/qa/outputs/qa-review.json
+            pnpm qa:gate -- .ai/workspace/qa/outputs/qa-review.json
+          else
+            pnpm qa:prepare -- --base "origin/${{ github.base_ref }}" --head HEAD
+            echo "No QA_REVIEW_JSON_B64 secret; QA gate runs in optional mode."
+            pnpm qa:gate -- --optional
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qa-workspace
+          path: |
+            .ai/workspace/qa
+            .quality/qa-gate-report.json
