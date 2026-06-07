@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Agent runtime runbook
+    url: https://github.com/Maciker/agent-workflow-code-ts/blob/main/docs/agents-24-7.md
+    about: How the 24/7 agent runtime, risk routing and auto-merge work.

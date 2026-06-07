@@ -1,0 +1,65 @@
+name: Agent task
+description: A task for the 24/7 agent runtime to pick up from the GitHub Project.
+title: "[agent] "
+labels: ["agent:ready"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is consumed by the 24/7 agent runtime. It becomes the PRD seed for
+        discovery and planning. Be concrete: the clearer the success criteria and
+        constraints, the lower the risk and the more likely it can auto-merge.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happens and when. Describe the problem, not a solution.
+      placeholder: When a user submits an empty cart, the checkout endpoint returns 500.
+    validations:
+      required: true
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: Success criteria
+      description: Observable conditions that must be true when the task is done.
+      placeholder: |
+        - Empty cart checkout returns 400 with a clear error body.
+        - A unit test covers the empty cart case.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: What must not change. Public contracts, compatibility, performance limits.
+      placeholder: Do not change the existing checkout response shape for non-empty carts.
+    validations:
+      required: false
+  - type: textarea
+    id: areas
+    attributes:
+      label: Affected files or areas
+      description: Where the change likely lives. Helps the planner and the risk classifier.
+      placeholder: src/checkout/**
+    validations:
+      required: false
+  - type: dropdown
+    id: suggested-risk
+    attributes:
+      label: Suggested risk
+      description: |
+        Initial hint only. The repo re-derives risk in preflight and CI; it is never trusted blindly.
+        high = touches security, migrations, dependencies, infra/CI, secrets, or quality baselines.
+      options:
+        - "low - small, reversible, well-tested change in one area"
+        - "medium - new business logic or multiple modules"
+        - "high - security, migrations, dependencies, infra/CI, secrets, or baselines"
+    validations:
+      required: true
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: Agent readiness
+      options:
+        - label: This task is self-contained and does not require product decisions mid-flight.
+          required: false

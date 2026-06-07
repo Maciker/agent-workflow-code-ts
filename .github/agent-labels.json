@@ -1,0 +1,9 @@
+[
+  { "name": "agent:ready", "color": "0e8a16", "description": "Queued for the 24/7 agent runtime to pick up" },
+  { "name": "agent:in-progress", "color": "fbca04", "description": "Claimed by the agent runtime; do not start another" },
+  { "name": "agent:blocked", "color": "d93f0b", "description": "Agent stopped; missing info or external dependency" },
+  { "name": "agent:needs-human", "color": "b60205", "description": "Requires human decision, review or merge" },
+  { "name": "risk:low", "color": "c2e0c6", "description": "Small, reversible, well-tested change; eligible for auto-merge" },
+  { "name": "risk:medium", "color": "fef2c0", "description": "New business logic or multiple modules; human review" },
+  { "name": "risk:high", "color": "e99695", "description": "Security, migrations, deps, infra/CI, secrets or baselines; human required" }
+]
