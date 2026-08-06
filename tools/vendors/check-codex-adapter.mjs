@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { basename, join, relative } from 'node:path';
+import { existsSync } from 'node:fs';
+import { basename, join } from 'node:path';
+import { fsHelpers } from '../lib/fsx.mjs';
 
 const root = process.cwd();
+const { read, relativeFromRoot, listFiles } = fsHelpers(root);
 const fail = (message) => {
   console.error(`Codex adapter check failed: ${message}`);
   process.exitCode = 1;
@@ -10,17 +12,7 @@ const fail = (message) => {
 const requireFile = (path) => {
   if (!existsSync(join(root, path))) fail(`missing ${path}`);
 };
-const listFiles = (dir, suffix) => {
-  const full = join(root, dir);
-  if (!existsSync(full)) return [];
-  return readdirSync(full)
-    .map((entry) => join(full, entry))
-    .filter((path) => statSync(path).isFile() && path.endsWith(suffix))
-    .sort();
-};
-const read = (path) => readFileSync(join(root, path), 'utf8');
 const parseNames = (files, pattern) => files.map((file) => basename(file).replace(pattern, '')).sort();
-const relativeFromRoot = (file) => relative(root, file).replaceAll('\\', '/');
 
 for (const path of [
   '.codex/config.toml',

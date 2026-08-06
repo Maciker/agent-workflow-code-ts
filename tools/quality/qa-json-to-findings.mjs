@@ -1,13 +1,8 @@
 #!/usr/bin/env node
-import fs from "node:fs";
 import { normalizeFinding, writeFindings } from "./lib/findings.mjs";
+import { readReportArgs } from "../lib/args.mjs";
 
-const args = process.argv.slice(2);
-const inputPath = args[0] && !args[0].startsWith("--") ? args[0] : ".ai/workspace/qa/outputs/qa-review.json";
-const outIndex = args.indexOf("--out");
-const outputPath = outIndex >= 0 ? args[outIndex + 1] : undefined;
-const root = process.cwd();
-const report = fs.existsSync(inputPath) ? JSON.parse(fs.readFileSync(inputPath, "utf8")) : {};
+const { outputPath, root, report } = readReportArgs(".ai/workspace/qa/outputs/qa-review.json");
 const findings = [];
 
 function severityFromQa(qaSeverity, blocking) {

@@ -1,4 +1,5 @@
 import { extractJson } from "../../lib/json.mjs";
+import { postJson } from "./http.mjs";
 
 function splitMessages(request) {
   if (Array.isArray(request.messages)) {
@@ -46,23 +47,16 @@ export function createAnthropicAdapter(config) {
         ...(config.extraBody ?? {}),
       };
 
-      const response = await fetch(`${baseUrl}/v1/messages`, {
-        method: "POST",
+      const payload = await postJson({
+        url: `${baseUrl}/v1/messages`,
         headers: {
-          "content-type": "application/json",
           "anthropic-version": config.anthropicVersion ?? "2023-06-01",
           ...(config.apiKey ? { "x-api-key": config.apiKey } : {}),
           ...(config.headers ?? {}),
         },
-        body: JSON.stringify(body),
+        body,
+        name: this.name,
       });
-
-      if (!response.ok) {
-        const detail = await response.text().catch(() => "");
-        throw new Error(`${this.name} request failed: ${response.status} ${response.statusText} ${detail}`.trim());
-      }
-
-      const payload = await response.json();
       const text = (payload.content ?? [])
         .filter((block) => block.type === "text")
         .map((block) => block.text)

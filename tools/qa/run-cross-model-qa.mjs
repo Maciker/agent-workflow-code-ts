@@ -4,19 +4,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { createLLMClient, resolveConfig } from "../ai/llm-client.mjs";
 import { ensureDirFor, resolveAiDir } from "../lib/workspace.mjs";
+import { argHelpers } from "../lib/args.mjs";
 
 const root = process.cwd();
-const args = process.argv.slice(2);
-
-function argValue(name, fallback) {
-  const index = args.indexOf(name);
-  if (index >= 0 && args[index + 1] && !args[index + 1].startsWith("--")) return args[index + 1];
-  return fallback;
-}
-
-function hasFlag(name) {
-  return args.includes(name);
-}
+const { value: argValue, flag: hasFlag } = argHelpers();
 
 const ai = resolveAiDir(root);
 const inputPath = argValue("--input", path.join(ai, "workspace/qa/inputs/qa-input.md"));

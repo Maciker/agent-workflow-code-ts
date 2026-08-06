@@ -1,4 +1,5 @@
 import { extractJson } from "../../lib/json.mjs";
+import { postJson } from "./http.mjs";
 
 function toMessages(request) {
   if (Array.isArray(request.messages)) return request.messages;
@@ -53,22 +54,15 @@ export function createOpenAICompatAdapter(config) {
         ...(request.extraBody ?? {}),
       };
 
-      const response = await fetch(`${baseUrl}/chat/completions`, {
-        method: "POST",
+      const payload = await postJson({
+        url: `${baseUrl}/chat/completions`,
         headers: {
-          "content-type": "application/json",
           ...(config.apiKey ? { authorization: `Bearer ${config.apiKey}` } : {}),
           ...(config.headers ?? {}),
         },
-        body: JSON.stringify(body),
+        body,
+        name: this.name,
       });
-
-      if (!response.ok) {
-        const detail = await response.text().catch(() => "");
-        throw new Error(`${this.name} request failed: ${response.status} ${response.statusText} ${detail}`.trim());
-      }
-
-      const payload = await response.json();
       const choice = payload.choices?.[0];
       const text = choice?.message?.content ?? "";
       const toolCalls = (choice?.message?.tool_calls ?? []).map((call) => ({
