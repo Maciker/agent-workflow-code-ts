@@ -1,6 +1,6 @@
 {
   "name": "agent-workflow-code-ts",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "private": true,
   "description": "Guardrails boilerplate for agent-guided TypeScript development.",
   "type": "module",
@@ -46,6 +46,10 @@
     "sync:ai": "node tools/vendors/sync-vendors.mjs",
     "vendors:check": "node tools/vendors/check-vendor-adapters.mjs",
     "codex:check": "node tools/vendors/check-codex-adapter.mjs && node tools/vendors/check-codex-skill-budget.mjs",
+    "codex:skills:budget": "node tools/vendors/check-codex-skill-budget.mjs",
+    "quality:vendor": "pnpm ai:sync && pnpm vendors:check",
+    "quality:codex": "pnpm codex:check",
+    "quality:stabilization": "pnpm ai:sync && pnpm vendors:check && pnpm codex:check && pnpm dogfood:check",
     "dogfood:check": "node tools/stabilization/dogfood-check.mjs",
     "doctor": "node tools/diagnostics/doctor.mjs",
     "setup:hooks": "bash scripts/install-githooks.sh"

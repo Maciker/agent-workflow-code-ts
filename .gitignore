@@ -2,8 +2,8 @@ node_modules/
 dist/
 .quality/
 
-# Generated workspace artifacts (PRDs, plans, summaries, reviews, QA, loop state)
-.ai/workspace/
+# Generated workspace artifacts are ignored by .ai/workspace/.gitignore;
+# the workspace directory structure is kept via tracked .gitkeep files.
 
 # Sandbox worktrees
 .sandbox/

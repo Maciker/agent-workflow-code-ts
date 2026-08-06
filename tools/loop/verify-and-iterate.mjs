@@ -5,16 +5,11 @@ import path from "node:path";
 import { parse } from "yaml";
 import { readFindings, summarizeFindings } from "../quality/lib/findings.mjs";
 import { ensureDirFor, workspacePath } from "../lib/workspace.mjs";
+import { argHelpers } from "../lib/args.mjs";
 
 const root = process.cwd();
-const args = process.argv.slice(2);
+const { args, value: argValue } = argHelpers();
 const command = args.find((arg) => !arg.startsWith("--")) ?? "run";
-
-function argValue(name, fallback) {
-  const index = args.indexOf(name);
-  if (index >= 0 && args[index + 1] && !args[index + 1].startsWith("--")) return args[index + 1];
-  return fallback;
-}
 
 function loadConfig() {
   const configPath = path.join(root, "quality/quality.yml");

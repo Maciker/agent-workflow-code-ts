@@ -1,19 +1,10 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import { normalizeFinding, writeFindings, writeJson } from "../quality/lib/findings.mjs";
+import { argHelpers } from "../lib/args.mjs";
 
-const args = process.argv.slice(2);
+const { args, valueLoose: argValue, flag: hasFlag } = argHelpers();
 const inputPath = args[0] && !args[0].startsWith("--") ? args[0] : ".ai/workspace/qa/outputs/qa-review.json";
-
-function argValue(name, fallback) {
-  const index = args.indexOf(name);
-  if (index >= 0 && args[index + 1]) return args[index + 1];
-  return fallback;
-}
-
-function hasFlag(name) {
-  return args.includes(name);
-}
 
 const optional = hasFlag("--optional") || process.env.QA_GATE_OPTIONAL === "1";
 const passScore = Number(argValue("--pass-score", process.env.QA_PASS_SCORE ?? "80"));

@@ -2,19 +2,10 @@
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { argHelpers } from "../lib/args.mjs";
 
 const root = process.cwd();
-const args = process.argv.slice(2);
-
-function argValue(name, fallback) {
-  const index = args.indexOf(name);
-  if (index >= 0 && args[index + 1]) return args[index + 1];
-  return fallback;
-}
-
-function hasFlag(name) {
-  return args.includes(name);
-}
+const { valueLoose: argValue, flag: hasFlag } = argHelpers();
 
 const base = argValue("--base", "origin/main");
 const head = argValue("--head", "HEAD");

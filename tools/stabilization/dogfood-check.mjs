@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { fsHelpers } from '../lib/fsx.mjs';
 
 const root = process.cwd();
-const relativeFromRoot = (path) => relative(root, path).replaceAll('\\', '/');
+const { read, relativeFromRoot, listFiles } = fsHelpers(root);
 let failures = 0;
 
 const fail = (message) => {
@@ -14,17 +15,6 @@ const fail = (message) => {
 
 const requireFile = (path) => {
   if (!existsSync(join(root, path))) fail(`missing ${path}`);
-};
-
-const read = (path) => readFileSync(join(root, path), 'utf8');
-
-const listFiles = (dir, suffix) => {
-  const full = join(root, dir);
-  if (!existsSync(full)) return [];
-  return readdirSync(full)
-    .map((entry) => join(full, entry))
-    .filter((path) => statSync(path).isFile() && path.endsWith(suffix))
-    .sort();
 };
 
 const runNode = (script) => {

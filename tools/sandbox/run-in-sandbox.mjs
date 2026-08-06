@@ -2,19 +2,10 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { argHelpers } from "../lib/args.mjs";
 
 const root = process.cwd();
-const args = process.argv.slice(2);
-
-function argValue(name, fallback) {
-  const index = args.indexOf(name);
-  if (index >= 0 && args[index + 1] && !args[index + 1].startsWith("--")) return args[index + 1];
-  return fallback;
-}
-
-function hasFlag(name) {
-  return args.includes(name);
-}
+const { value: argValue, flag: hasFlag } = argHelpers();
 
 const ref = argValue("--ref", "HEAD");
 const command = argValue("--cmd", "pnpm quality:full");
