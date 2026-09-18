@@ -8,6 +8,8 @@
 
 ## Strategy
 
+Identify independently verifiable slices and their blockers. For large uncertainty, separate a decision/research task from implementation tasks; do not disguise unanswered questions as ready implementation work.
+
 ## Steps
 
 - [ ] <step> -- verification: <check>

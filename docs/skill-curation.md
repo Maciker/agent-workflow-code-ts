@@ -29,6 +29,10 @@ The boilerplate separates reusable knowledge from executable workflows.
 
 ## Rules
 
+The curated knowledge additions are `codebase-design`, `domain-modeling`,
+`diagnosing-bugs` and `writing-for-agents`. Their source decisions, overlap and
+local adaptations are recorded in [source-intake.md](source-intake.md).
+
 - Keep core small.
 - Put framework-specific rules in profiles.
 - Do not put full review workflows in skills; use agents and commands.

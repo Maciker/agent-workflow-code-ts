@@ -95,6 +95,8 @@ Forbidden imports from another module:
 
 ## Detailed Patterns by Layer
 
+For an MCP server adapter, read `references/infrastructure/mcp-adapters.md`; it complements HTTP adapters without changing domain dependencies.
+
 - Domain: `references/domain/entities.md`, `references/domain/value-objects.md`, `references/domain/repositories.md`, `references/domain/domain-services.md`
 - Application: `references/application/usecases.md`, `references/application/dtos.md`
 - Infrastructure: `references/infrastructure/factory.md`, `references/infrastructure/http-adapters.md`

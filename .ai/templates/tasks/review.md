@@ -2,6 +2,10 @@
 
 ## Correct
 
+## Specification coverage
+
+## Standards compliance
+
 ## Problems
 
 | # | Severity | File or area | Problem | Suggested fix |

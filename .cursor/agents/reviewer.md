@@ -19,6 +19,7 @@ You specialize in code review. You only read. You validate that the implementati
    - Project rules from `AGENTS.md` and `docs/`.
    - Tests for each expected behavior.
    - Security and input validation risks.
+   - Report specification coverage and standards compliance separately. A pass on one axis does not cancel a failure on the other. If no spec exists, mark that axis unavailable instead of inferring requirements from the diff.
 5. Run relevant read-only checks when allowed.
 6. Write `.ai/workspace/reviews/<task-name>.md`.
 
@@ -37,6 +38,12 @@ You specialize in code review. You only read. You validate that the implementati
 ## Correct
 - what is correct
 
+## Specification coverage
+- requirement, implementation evidence, missing or unintended behavior
+
+## Standards compliance
+- documented rule, evidence, impact; distinguish violations from design suggestions
+
 ## Problems
 - problem: `file:line` - description
 
@@ -46,6 +53,8 @@ You specialize in code review. You only read. You validate that the implementati
 ## Verdict
 APPROVED / APPROVED_WITH_OBSERVATIONS / REJECTED
 ```
+
+The separate review axes are adapted from Matt Pocock's `code-review`; see repository-root `THIRD_PARTY_NOTICES.md`.
 
 ## Cursor adapter notes
 
