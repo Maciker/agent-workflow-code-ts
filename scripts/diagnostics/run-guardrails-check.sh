@@ -108,7 +108,7 @@ fi
 
 section "QA CROSS-MODEL"
 run_script "qa:prepare" "-- --base origin/main --head HEAD"
-run_script "qa:gate:optional"
+run_script "qa:gate" "-- --optional"
 
 if [ "$RUN_QA_STRICT" = "1" ]; then
   if [ -f ".ai/workspace/qa/outputs/qa-review.json" ]; then

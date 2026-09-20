@@ -88,4 +88,4 @@ pnpm quality:agent
 
 `stop` means the agent must stop. A human must clarify intent, reduce scope or return to discovery.
 
-A missing QA review fails `pnpm qa:gate` by default. Use `pnpm qa:gate:optional` only in CI jobs where QA is deliberately disabled.
+A missing QA review fails `pnpm qa:gate` by default. Use `pnpm qa:gate -- --optional` only in CI jobs where QA is deliberately disabled.

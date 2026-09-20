@@ -355,7 +355,24 @@ const syncCodex = () => {
   const agentConfig = agentEntries
     .map((agent) => `[agents.${tomlString(agent.name)}]\ndescription = ${tomlString(agent.description)}\nconfig_file = ${tomlString(`agents/${agent.name}.toml`)}\n`)
     .join('\n');
-  write(join(paths.codex, 'config.toml'), `# Project-specific Codex configuration.\n# Canonical workflow instructions live in AGENTS.md and .ai/.\n# User-specific model, provider, auth and approval settings should remain in ~/.codex/config.toml.\n\nproject_doc_max_bytes = 32768\n\n[agents]\nmax_threads = 6\nmax_depth = 1\njob_max_runtime_seconds = 1800\n\n${agentConfig}\n[mcp_servers.context7]\ncommand = "npx"\nargs = ["-y", "@upstash/context7-mcp"]\n\n[mcp_servers.context7.env]\nCONTEXT7_API_KEY = "\${CONTEXT7_API_KEY}"\n\n[mcp_servers.playwright]\ncommand = "npx"\nargs = ["-y", "@playwright/mcp@latest", "--isolated"]\n`);
+  const mcpServers = JSON.parse(read(join(paths.ai, 'mcp.json'))).mcpServers;
+  const mcpConfig = Object.entries(mcpServers).map(([name, server]) => {
+    const key = /^[A-Za-z0-9_-]+$/.test(name) ? name : tomlString(name);
+    const lines = [
+      `[mcp_servers.${key}]`,
+      `command = ${tomlString(server.command)}`,
+      `args = ${tomlArray(server.args ?? [])}`,
+    ];
+    if (server.env && Object.keys(server.env).length) {
+      lines.push('', `[mcp_servers.${key}.env]`);
+      for (const [variable, value] of Object.entries(server.env)) {
+        const envKey = /^[A-Za-z0-9_-]+$/.test(variable) ? variable : tomlString(variable);
+        lines.push(`${envKey} = ${tomlString(value)}`);
+      }
+    }
+    return lines.join('\n');
+  }).join('\n\n');
+  write(join(paths.codex, 'config.toml'), `# Project-specific Codex configuration.\n# Canonical workflow instructions live in AGENTS.md and .ai/.\n# User-specific model, provider, auth and approval settings should remain in ~/.codex/config.toml.\n\nproject_doc_max_bytes = 32768\n\n[agents]\nmax_threads = 6\nmax_depth = 1\njob_max_runtime_seconds = 1800\n\n${agentConfig}\n${mcpConfig}\n`);
   write(join(paths.codex, 'README.md'), `# Codex adapter\n\nThis directory is generated from .ai/ by \`pnpm ai:sync\`.\n\n## Contents\n\n- \`AGENTS.md\`: copy of the root project instruction contract.\n- \`config.toml\`: project-scoped Codex config with subagent limits and MCP servers.\n- \`agents/*.toml\`: Codex custom agents generated from .ai/agents.\n- \`hooks.json\` and \`hooks/*.mjs\`: lightweight repository guardrails for dangerous commands, generated vendor edits, and quality hints.\n\nDo not put personal credentials in this directory. Prefer environment variables and user-level Codex config.\n`);
   copyDir(join(root, 'AGENTS.md'), join(paths.codex, 'AGENTS.md'));
 };

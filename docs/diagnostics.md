@@ -5,13 +5,15 @@ Temporary diagnostic script for checking the guardrails package in a local envir
 Run from the repository root:
 
 ```bash
-pnpm diagnostics
+bash scripts/diagnostics/run-guardrails-check.sh
 ```
 
-Or directly:
+The diagnostics script writes logs and may install dependencies, regenerate adapters and install Git hooks. For a read-only environment check use `pnpm doctor`.
+
+To disable installation, full checks and hook setup:
 
 ```bash
-bash scripts/diagnostics/run-guardrails-check.sh
+RUN_INSTALL=0 RUN_FULL=0 RUN_HOOKS=0 bash scripts/diagnostics/run-guardrails-check.sh
 ```
 
 The log is written to:

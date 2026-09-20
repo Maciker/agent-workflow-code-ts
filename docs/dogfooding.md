@@ -2,6 +2,8 @@
 
 Use this guide to validate the boilerplate as a real user would use it. The goal is not to add functionality; the goal is to prove that installation, vendor adapters, hooks, quality gates and agent workflows are usable from a clean checkout.
 
+`pnpm dogfood:check` checks files, metadata and adapter structure only. The complete manual checklist below also requires live execution; the structural check alone is not end-to-end evidence.
+
 ## Scope
 
 This phase validates:
@@ -34,7 +36,7 @@ pnpm quality:full
 If this is the first run in a new repository or migrated project, initialize baselines once:
 
 ```bash
-pnpm quality:ratchet:init
+pnpm quality:init
 ```
 
 After initialization, use the normal ratchet command:
@@ -99,7 +101,7 @@ pnpm qa:prepare -- --base origin/main --head HEAD
 If no real QA JSON exists yet, the strict gate should fail and the optional gate should not block:
 
 ```bash
-pnpm qa:gate:optional
+pnpm qa:gate -- --optional
 ```
 
 For a real run, save a review JSON to:
