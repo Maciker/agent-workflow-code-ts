@@ -27,6 +27,9 @@ Skills are small, focused knowledge packs. They are loaded when relevant and sho
 | `domain-modeling` | Resolving domain terminology, invariants and durable decisions |
 | `diagnosing-bugs` | Building a reproduction and testing causes before a fix |
 | `writing-for-agents` | Authoring focused instructions and context pointers |
+| `grilling` | Stress-testing a plan, decision or idea before acting |
+
+`grill-me` is the user-started entry point for `grilling`.
 
 These are reusable disciplines. User-started procedures remain in `.ai/commands/`.
 See [the workflow guide](curated-workflows.md) and [source decisions](source-intake.md).

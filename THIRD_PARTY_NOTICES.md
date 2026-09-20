@@ -8,7 +8,7 @@ Reviewed revision: `c55ee46073ed923f86ce59a5eb3b6d895095d1b7` (2026-09-18).
 
 Copyright (c) 2026 Matt Pocock. Licensed under MIT; the complete notice is in [licenses/mattpocock-skills-MIT.txt](licenses/mattpocock-skills-MIT.txt).
 
-Adaptations cover the four added knowledge skills (`codebase-design`, `domain-modeling`, `diagnosing-bugs`, `writing-for-agents`), the spec/ticket/design/diagnosis/prototype/triage/conflict commands and associated templates, behavior-oriented testing, migration guidance, separate review axes, primary-source research, and compact handoffs. Generated vendor projections carry these same adaptations and remain covered by this notice.
+Adaptations cover the six added knowledge skills (`codebase-design`, `domain-modeling`, `diagnosing-bugs`, `writing-for-agents`, `grilling`, `grill-me`), the spec/ticket/design/diagnosis/prototype/triage/conflict commands and associated templates, behavior-oriented testing, migration guidance, separate review axes, primary-source research, and compact handoffs. Generated vendor projections carry these same adaptations and remain covered by this notice.
 
 These are curated adaptations maintained here, not an upstream mirror, endorsement, or unmodified Matt Pocock distribution. Local workflow, test and authorization rules take precedence. See [the intake matrix](docs/source-intake.md) for per-source decisions.
 

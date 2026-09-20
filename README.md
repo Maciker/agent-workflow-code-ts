@@ -123,7 +123,5 @@ The full history is in [`CHANGELOG.md`](CHANGELOG.md). Highlights:
 
 ## License
 
-Attribution and the MIT license for adapted Matt Pocock material are in
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). An overall license for original
-repository content has not yet been declared; the third-party notice does not
-grant rights to unrelated course material or pre-existing files.
+Released under the [MIT License](LICENSE). Third-party attribution and notices
+are in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

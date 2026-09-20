@@ -8,6 +8,7 @@ This repository is Iker Macaya's maintained TypeScript workflow: shared instruct
 | --- | --- | --- |
 | Understand an unfamiliar repository | `/repo-discovery` | Structure, validation and risk maps |
 | Clarify the user problem | `/discovery` | PRD; resolve meaningful ambiguities |
+| Stress-test a plan or decision | `/grill-me` | Decision tree, assumptions and a clear next action |
 | Capture settled requirements | `/to-spec` | Observable criteria, contracts, test interfaces |
 | Break work into deliverable slices | `/to-tickets` | Tickets with explicit blockers |
 | Investigate a bug | `/diagnose` | Reproduction and supported cause |
