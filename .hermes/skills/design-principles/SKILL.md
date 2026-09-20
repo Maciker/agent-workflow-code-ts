@@ -5,6 +5,8 @@ description: This skill should be used when writing or reviewing code, refactori
 
 # Design Principles
 
+For interface design or shallow abstractions, load the repository's `codebase-design` skill. Keep the hexagonal rules and existing domain vocabulary when comparing alternatives.
+
 Code design standards covering naming, functions, classes/modules, comments, and error handling.
 
 ## Naming

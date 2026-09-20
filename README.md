@@ -1,6 +1,14 @@
 # agent-workflow-code-ts
 
-Guardrails boilerplate for agent-guided TypeScript development.
+A portable workflow for agent-guided TypeScript development: clarify the problem,
+design small changes, implement with feedback, and verify the result.
+
+Maintained by Iker Macaya from hands-on development and training. Selected
+practices from Matt Pocock's skills and the `ai-learnings` collection are adapted
+to this repository's contracts, with [source attribution](THIRD_PARTY_NOTICES.md).
+
+Start with the [workflow guide](docs/curated-workflows.md), the
+[source intake matrix](docs/source-intake.md), or the quickstart below.
 
 This repository is not an application. It is a **workflow system**: a canonical
 set of agent instructions, commands, skills and policies in `.ai/`, projected
@@ -53,6 +61,10 @@ src/, test/     example TypeScript package
 7. Deterministic quality gates before opening or merging a PR.
 
 ## Common commands
+
+For spec writing, vertical tickets, bug diagnosis, module design, prototypes and
+triage, see the [task-to-command guide](docs/curated-workflows.md). These procedures
+reuse the existing execution and review gates.
 
 ```bash
 pnpm quality:fast        # typecheck + lint + test
@@ -111,5 +123,5 @@ The full history is in [`CHANGELOG.md`](CHANGELOG.md). Highlights:
 
 ## License
 
-See repository metadata. This boilerplate is intended to be copied into and
-adapted for downstream projects.
+Released under the [MIT License](LICENSE). Third-party attribution and notices
+are in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

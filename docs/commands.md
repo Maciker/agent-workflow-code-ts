@@ -1,5 +1,12 @@
 # Commands
 
+## Curated procedures
+
+The canonical prompts `/to-spec`, `/to-tickets`, `/diagnose`, `/design-module`,
+`/prototype`, `/triage`, `/resolve-conflicts` and `/review-skill` live in
+`.ai/commands/`. See [curated-workflows.md](curated-workflows.md) for inputs,
+outputs and tool-specific invocation limits.
+
 Command files are reusable prompts. They are the stable interface humans invoke; commands delegate to agents or quality scripts.
 
 | Command | Purpose | Profile |

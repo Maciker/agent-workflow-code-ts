@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Curated six knowledge skills and nine workflow commands from reviewed
+  learning sources, with explicit source revisions and MIT attribution.
+- Added spec, ticket, diagnosis and domain-document templates; extended existing
+  testing, safe-refactoring, research, review and handoff guidance.
+- Added optional MCP adapter guidance and a representative workflow exercise.
+- Added the `grill-me` interview flow and a root MIT license for public reuse.
+
 All notable changes to `agent-workflow-code-ts` are documented here.
 
 This project is a guardrails boilerplate for agent-guided TypeScript development.

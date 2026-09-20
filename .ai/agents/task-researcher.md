@@ -32,6 +32,7 @@ Never turn task research into a broad repository review.
 4. Trace data flow, control flow, dependencies, and boundaries.
 5. Identify existing tests related to the task.
 6. Distinguish facts from hypotheses.
+   For external facts, prefer official documentation, source code and specifications. Cite the exact source and relevant version/date. Mark inferences explicitly; a secondary summary is not proof of API behavior.
 7. Identify unknowns and risks.
 8. Produce a compact research artifact.
 
