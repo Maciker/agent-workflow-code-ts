@@ -105,7 +105,7 @@ cat .quality/ratchet-report.json
 If this is the first baseline for a migrated project, initialize once:
 
 ```bash
-pnpm quality:ratchet:init
+pnpm quality:init
 ```
 
 Do not add new findings to a baseline as part of normal work. Existing baselines may only shrink unless a human explicitly approves a baseline reset.
@@ -131,7 +131,7 @@ pnpm qa:validate
 pnpm qa:gate
 ```
 
-Use `pnpm qa:gate:optional` only for local smoke tests where QA is not required yet.
+Use `pnpm qa:gate -- --optional` only for local smoke tests where QA is not required yet.
 
 ## Dependency-cruiser reports architecture violations
 
@@ -170,7 +170,7 @@ Then run:
 Check that Node can run the package:
 
 ```bash
-npx -y @playwright/mcp@latest --help
+npx -y @playwright/mcp@0.0.82 --help
 ```
 
 If the environment blocks network access, install dependencies before starting the agent or disable Playwright MCP for that session.

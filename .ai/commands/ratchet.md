@@ -5,7 +5,7 @@ Task: $ARGUMENTS
 Bootstrap once:
 
 ```bash
-pnpm quality:ratchet:init
+pnpm quality:init
 ```
 
 Normal execution:

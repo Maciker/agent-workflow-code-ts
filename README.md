@@ -75,7 +75,7 @@ pnpm quality:vendor      # sync + vendor check
 pnpm quality:codex       # validate the Codex adapter
 pnpm qa:prepare          # build a clean cross-model QA input from the diff
 pnpm qa:gate             # evaluate a cross-model QA review
-pnpm dogfood:check       # prove a clean checkout is usable end to end
+pnpm dogfood:check       # check scaffold and adapter structure
 pnpm doctor              # environment diagnostics
 ```
 
@@ -120,6 +120,14 @@ The full history is in [`CHANGELOG.md`](CHANGELOG.md). Highlights:
 ### v0.7.2 additions
 
 - Cross-platform hardening: Windows-safe path handling in findings and reports.
+
+## Contributing and publication
+
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the
+[public-release checklist](docs/public-release.md). GitHub CI runs deterministic
+checks and rejects adapter regeneration drift; independent cross-model QA and
+human review remain separate requirements. `package.json` intentionally retains
+`private: true` to prevent accidental npm publication, not public GitHub access.
 
 ## License
 

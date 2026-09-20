@@ -7,7 +7,7 @@ The ratchet prevents known technical debt from growing.
 Initialize baselines once:
 
 ```bash
-pnpm quality:ratchet:init
+pnpm quality:init
 ```
 
 This records the current deterministic findings under:
