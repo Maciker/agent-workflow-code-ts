@@ -77,7 +77,7 @@ pnpm quality:codex       # validate the Codex adapter
 pnpm qa:prepare          # build an exact-SHA cross-model QA input from the diff
 pnpm qa:record           # record verified implementer/reviewer model identities
 pnpm qa:gate             # validate the QA review JSON
-pnpm prepr:gate          # strict deterministic + exact-SHA PR gate             # evaluate a cross-model QA review
+pnpm prepr:gate          # strict deterministic + exact-SHA PR gate
 pnpm dogfood:check       # check scaffold and adapter structure
 pnpm doctor              # environment diagnostics
 ```
