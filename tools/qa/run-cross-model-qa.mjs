@@ -28,11 +28,12 @@ function readFileOrFail(relative, hint) {
   return fs.readFileSync(absolute, "utf8");
 }
 
-function ensureInput(implementerModel) {
+function ensureInput(implementerModel, implementerProvider) {
   const absolute = path.isAbsolute(inputPath) ? inputPath : path.join(root, inputPath);
   if (fs.existsSync(absolute)) return;
   console.log(`[qa] ${inputPath} not found; generating it with prepare-qa-input.mjs`);
   const prepareArgs = ["tools/qa/prepare-qa-input.mjs", "--base", base, "--head", head, "--out", inputPath, "--quiet"];
+  if (implementerProvider) prepareArgs.push("--implementer-provider", implementerProvider);
   if (implementerModel) prepareArgs.push("--implementer-model", implementerModel);
   const result = spawnSync(process.execPath, prepareArgs, { cwd: root, stdio: "inherit" });
   if ((result.status ?? 1) !== 0) throw new Error("Failed to prepare QA input");
@@ -51,15 +52,18 @@ async function main() {
 
   const contextAbsolute = path.isAbsolute(contextPath) ? contextPath : path.join(root, contextPath);
   let context = fs.existsSync(contextAbsolute) ? JSON.parse(fs.readFileSync(contextAbsolute, "utf8")) : null;
+  const implementerProvider = argValue("--implementer-provider", process.env.AI_PROVIDER ?? context?.implementerProvider ?? undefined);
   const implementerModel = argValue("--implementer-model", process.env.AI_MODEL ?? context?.implementerModel ?? undefined);
-  if (implementerModel && qaConfig.model && implementerModel === qaConfig.model) {
+  const implementerIdentity = implementerProvider && implementerModel ? `${implementerProvider}:${implementerModel}` : implementerModel;
+  const reviewerIdentity = qaConfig.provider && qaConfig.model ? `${qaConfig.provider}:${qaConfig.model}` : qaConfig.model;
+  if (implementerIdentity && reviewerIdentity && implementerIdentity === reviewerIdentity) {
     throw new Error(
-      `Cross-model QA must use a different model than the implementer (${implementerModel}). ` +
+      `Cross-model QA must use a different provider/model identity than the implementer (${implementerIdentity}). ` +
         "Set AI_QA_PROVIDER / AI_QA_MODEL or pass --qa-provider/--qa-model.",
     );
   }
 
-  ensureInput(implementerModel);
+  ensureInput(implementerModel, implementerProvider);
   if (!context && fs.existsSync(contextAbsolute)) context = JSON.parse(fs.readFileSync(contextAbsolute, "utf8"));
 
   const system = readFileOrFail(promptPath, "Generate vendor adapters or restore the canonical prompt.");
@@ -100,7 +104,7 @@ async function main() {
 
   const outputAbsolute = path.isAbsolute(outputPath) ? outputPath : path.join(root, outputPath);
   const runManifestAbsolute = path.isAbsolute(runManifestPath) ? runManifestPath : path.join(root, runManifestPath);
-  const modelDistinct = Boolean(implementerModel && qaConfig.model && implementerModel !== qaConfig.model);
+  const modelDistinct = Boolean(implementerIdentity && reviewerIdentity && implementerIdentity !== reviewerIdentity);
   const runManifest = {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
@@ -112,7 +116,10 @@ async function main() {
     reviewSha256: sha256(fs.readFileSync(outputAbsolute, "utf8")),
     reviewerProvider: qaConfig.provider ?? null,
     reviewerModel: qaConfig.model ?? null,
+    implementerProvider: implementerProvider ?? null,
     implementerModel: implementerModel ?? null,
+    reviewerIdentity: reviewerIdentity ?? null,
+    implementerIdentity: implementerIdentity ?? null,
     modelDistinct,
     modelVerification: modelDistinct ? "verified" : "unverified",
   };
