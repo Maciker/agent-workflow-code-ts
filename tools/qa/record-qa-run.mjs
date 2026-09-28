@@ -2,25 +2,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { argHelpers } from "../lib/args.mjs";
-import { sha256 } from "./qa-context.mjs";
+import { absolutePath, qaArtifactPaths, readJsonFile, sha256 } from "./qa-context.mjs";
 
 const root = process.cwd();
 const { value: argValue } = argHelpers();
-const contextPath = argValue("--context", ".ai/workspace/qa/inputs/qa-context.json");
-const outputPath = argValue("--output", ".ai/workspace/qa/outputs/qa-review.json");
-const manifestPath = argValue("--manifest", ".ai/workspace/qa/outputs/qa-run.json");
+const { contextPath, outputPath, manifestPath } = qaArtifactPaths(argValue);
 
 function fail(message) {
   throw new Error(message);
 }
 
-function readJson(relativePath) {
-  const absolute = path.isAbsolute(relativePath) ? relativePath : path.join(root, relativePath);
-  if (!fs.existsSync(absolute)) fail("Missing " + relativePath);
-  return JSON.parse(fs.readFileSync(absolute, "utf8"));
-}
-
-const context = readJson(contextPath);
+const context = readJsonFile(root, contextPath);
 const reviewerProvider = argValue("--reviewer-provider", null);
 const reviewerModel = argValue("--reviewer-model", null);
 const implementerProvider = argValue("--implementer-provider", context.implementerProvider ?? null);
@@ -32,7 +24,7 @@ if (!implementerModel) fail("A verified implementer model is required");
 const reviewerIdentity = reviewerProvider ? reviewerProvider + ":" + reviewerModel : reviewerModel;
 const implementerIdentity = implementerProvider ? implementerProvider + ":" + implementerModel : implementerModel;
 const modelDistinct = reviewerIdentity !== implementerIdentity;
-const reviewAbsolute = path.isAbsolute(outputPath) ? outputPath : path.join(root, outputPath);
+const reviewAbsolute = absolutePath(root, outputPath);
 if (!fs.existsSync(reviewAbsolute)) fail("Missing QA review at " + outputPath);
 
 const manifest = {
@@ -54,7 +46,7 @@ const manifest = {
   modelVerification: modelDistinct ? "verified" : "failed",
 };
 
-const manifestAbsolute = path.isAbsolute(manifestPath) ? manifestPath : path.join(root, manifestPath);
+const manifestAbsolute = absolutePath(root, manifestPath);
 fs.mkdirSync(path.dirname(manifestAbsolute), { recursive: true });
 fs.writeFileSync(manifestAbsolute, JSON.stringify(manifest, null, 2) + "\n");
 
