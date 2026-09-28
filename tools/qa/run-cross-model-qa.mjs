@@ -50,7 +50,7 @@ async function main() {
   });
 
   const contextAbsolute = path.isAbsolute(contextPath) ? contextPath : path.join(root, contextPath);
-  const context = fs.existsSync(contextAbsolute) ? JSON.parse(fs.readFileSync(contextAbsolute, "utf8")) : null;
+  let context = fs.existsSync(contextAbsolute) ? JSON.parse(fs.readFileSync(contextAbsolute, "utf8")) : null;
   const implementerModel = argValue("--implementer-model", process.env.AI_MODEL ?? context?.implementerModel ?? undefined);
   if (implementerModel && qaConfig.model && implementerModel === qaConfig.model) {
     throw new Error(
@@ -60,6 +60,7 @@ async function main() {
   }
 
   ensureInput(implementerModel);
+  if (!context && fs.existsSync(contextAbsolute)) context = JSON.parse(fs.readFileSync(contextAbsolute, "utf8"));
 
   const system = readFileOrFail(promptPath, "Generate vendor adapters or restore the canonical prompt.");
   const qaInput = readFileOrFail(inputPath);
