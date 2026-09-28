@@ -23,7 +23,7 @@ function readJson(relativePath) {
 const context = readJson(contextPath);
 const reviewerProvider = argValue("--reviewer-provider", null);
 const reviewerModel = argValue("--reviewer-model", null);
-const implementerProvider = argValue("--implementer-provider", null);
+const implementerProvider = argValue("--implementer-provider", context.implementerProvider ?? null);
 const implementerModel = argValue("--implementer-model", context.implementerModel ?? null);
 
 if (!reviewerModel) fail("A verified reviewer model is required");
