@@ -3,26 +3,14 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { argHelpers } from "../lib/args.mjs";
-import { resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
+import { absolutePath, qaArtifactPaths, readJsonFile, resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
 
 const root = process.cwd();
 const { value: argValue } = argHelpers();
-const contextPath = argValue("--context", ".ai/workspace/qa/inputs/qa-context.json");
-const outputPath = argValue("--output", ".ai/workspace/qa/outputs/qa-review.json");
-const manifestPath = argValue("--manifest", ".ai/workspace/qa/outputs/qa-run.json");
-
-function absolute(relativePath) {
-  return path.isAbsolute(relativePath) ? relativePath : path.join(root, relativePath);
-}
+const { contextPath, outputPath, manifestPath } = qaArtifactPaths(argValue);
 
 function fail(message) {
   throw new Error(message);
-}
-
-function readJson(relativePath) {
-  const filePath = absolute(relativePath);
-  if (!fs.existsSync(filePath)) fail("Missing " + relativePath);
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 function runNode(script, args) {
@@ -35,14 +23,14 @@ function runNode(script, args) {
   }
 }
 
-const context = readJson(contextPath);
+const context = readJsonFile(root, contextPath);
 if (context.schemaVersion !== 1) fail("Unsupported QA context schema");
 const currentHeadSha = resolveRefSha(root, context.headRef ?? "HEAD");
 if (currentHeadSha !== context.headSha) {
   fail("QA invalidated: HEAD changed from " + context.headSha + " to " + currentHeadSha);
 }
 
-const inputAbsolute = absolute(context.inputPath);
+const inputAbsolute = absolutePath(root, context.inputPath);
 if (!fs.existsSync(inputAbsolute)) fail("Missing QA input " + context.inputPath);
 if (sha256(fs.readFileSync(inputAbsolute, "utf8")) !== context.inputSha256) {
   fail("QA invalidated: QA input changed");
@@ -55,7 +43,7 @@ for (const key of ["statusSha256", "unstagedDiffSha256", "stagedDiffSha256"]) {
   }
 }
 
-const manifest = readJson(manifestPath);
+const manifest = readJsonFile(root, manifestPath);
 if (manifest.schemaVersion !== 1) fail("Unsupported QA run manifest schema");
 if (manifest.headSha !== context.headSha) fail("QA invalidated: run manifest targets another head SHA");
 if (manifest.inputSha256 !== context.inputSha256) fail("QA invalidated: run manifest targets another QA input");
@@ -63,7 +51,7 @@ if (manifest.modelVerification !== "verified" || manifest.modelDistinct !== true
   fail("Independent model verification is missing; do not open the PR");
 }
 
-const reviewAbsolute = absolute(outputPath);
+const reviewAbsolute = absolutePath(root, outputPath);
 if (!fs.existsSync(reviewAbsolute)) fail("Missing QA review " + outputPath);
 if (manifest.reviewSha256 !== sha256(fs.readFileSync(reviewAbsolute, "utf8"))) {
   fail("QA invalidated: review output changed after model metadata was recorded");
