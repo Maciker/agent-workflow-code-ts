@@ -87,7 +87,7 @@ fs.writeFileSync(contextAbsolute, `${JSON.stringify({
   inputSha256: sha256(output),
   workingTree: workingTreeSnapshot(root),
   implementerModel: implementerModel || null,
-}, null, 2)}\\n`);
+}, null, 2)}\n`);
 
 if (!hasFlag("--quiet")) {
   console.log(`QA input written to ${path.relative(root, absoluteOut)}`);
