@@ -38,7 +38,7 @@ Use this command after the executor finishes an implementation and before Cursor
 
 6. Record the model evidence. The reviewer identity and implementer identity must be verifiable:
 
-   pnpm qa:record -- --reviewer-provider <provider> --reviewer-model <model> --implementer-model <model>
+   pnpm qa:record -- --reviewer-provider <provider> --reviewer-model <model> --implementer-provider <provider> --implementer-model <model>
 
    If the host cannot provide either identity, stop instead of fabricating metadata.
 7. Run the strict pre-PR gate:
