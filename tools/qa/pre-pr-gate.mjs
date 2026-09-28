@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
-import { argHelpers } from "../lib/args.mjs";
-import { absolutePath, qaArtifactPaths, readJsonFile, resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
+import { absolutePath, qaRuntimeArgs, readJsonFile, resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
 
-const root = process.cwd();
-const { value: argValue } = argHelpers();
-const { contextPath, outputPath, manifestPath } = qaArtifactPaths(argValue);
+const { root, argValue, contextPath, outputPath, manifestPath } = qaRuntimeArgs();
 
 function fail(message) {
   throw new Error(message);
