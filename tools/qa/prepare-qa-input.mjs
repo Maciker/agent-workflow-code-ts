@@ -16,6 +16,7 @@ const plan = argValue("--plan", undefined);
 const summary = argValue("--summary", undefined);
 const review = argValue("--review", undefined);
 const contextPath = argValue("--context", ".ai/workspace/qa/inputs/qa-context.json");
+const implementerProvider = argValue("--implementer-provider", process.env.AI_PROVIDER ?? null);
 const implementerModel = argValue("--implementer-model", process.env.AI_MODEL ?? null);
 
 function readOptional(filePath) {
@@ -86,6 +87,7 @@ fs.writeFileSync(contextAbsolute, `${JSON.stringify({
   inputPath: out,
   inputSha256: sha256(output),
   workingTree: workingTreeSnapshot(root),
+  implementerProvider: implementerProvider || null,
   implementerModel: implementerModel || null,
 }, null, 2)}\n`);
 
