@@ -28,15 +28,13 @@ function readFileOrFail(relative, hint) {
   return fs.readFileSync(absolute, "utf8");
 }
 
-function ensureInput() {
+function ensureInput(implementerModel) {
   const absolute = path.isAbsolute(inputPath) ? inputPath : path.join(root, inputPath);
   if (fs.existsSync(absolute)) return;
   console.log(`[qa] ${inputPath} not found; generating it with prepare-qa-input.mjs`);
-  const result = spawnSync(
-    process.execPath,
-    ["tools/qa/prepare-qa-input.mjs", "--base", base, "--head", head, "--out", inputPath, "--quiet"],
-    { cwd: root, stdio: "inherit" },
-  );
+  const prepareArgs = ["tools/qa/prepare-qa-input.mjs", "--base", base, "--head", head, "--out", inputPath, "--quiet"];
+  if (implementerModel) prepareArgs.push("--implementer-model", implementerModel);
+  const result = spawnSync(process.execPath, prepareArgs, { cwd: root, stdio: "inherit" });
   if ((result.status ?? 1) !== 0) throw new Error("Failed to prepare QA input");
 }
 
@@ -61,7 +59,7 @@ async function main() {
     );
   }
 
-  ensureInput();
+  ensureInput(implementerModel);
 
   const system = readFileOrFail(promptPath, "Generate vendor adapters or restore the canonical prompt.");
   const qaInput = readFileOrFail(inputPath);
