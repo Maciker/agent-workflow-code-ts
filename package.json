@@ -32,7 +32,7 @@
     "quality:fast": "pnpm typecheck && pnpm lint && pnpm test",
     "quality:full": "pnpm typecheck && pnpm lint && pnpm test && pnpm arch && pnpm deadcode && pnpm dup && pnpm quality:ratchet",
     "quality:ci": "pnpm typecheck && pnpm lint && pnpm test && pnpm arch && pnpm deadcode && pnpm dup && pnpm quality:ratchet",
-    "quality:agent": "pnpm quality:full && pnpm qa:gate",
+    "quality:agent": "pnpm quality:full && pnpm prepr:gate",
     "loop": "node tools/loop/verify-and-iterate.mjs run",
     "loop:status": "node tools/loop/verify-and-iterate.mjs status",
     "loop:reset": "node tools/loop/verify-and-iterate.mjs reset",
@@ -52,7 +52,9 @@
     "quality:stabilization": "pnpm ai:sync && pnpm vendors:check && pnpm codex:check && pnpm dogfood:check",
     "dogfood:check": "node tools/stabilization/dogfood-check.mjs",
     "doctor": "node tools/diagnostics/doctor.mjs",
-    "setup:hooks": "bash scripts/install-githooks.sh"
+    "setup:hooks": "bash scripts/install-githooks.sh",
+    "qa:record": "node tools/qa/record-qa-run.mjs",
+    "prepr:gate": "node tools/qa/pre-pr-gate.mjs"
   },
   "dependencies": {
     "yaml": "^2.7.0"
