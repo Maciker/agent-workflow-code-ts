@@ -28,7 +28,7 @@ Use this command after the executor finishes an implementation and before Cursor
 
 3. Capture the exact diff and working-tree snapshot:
 
-   pnpm qa:prepare -- --base origin/main --head HEAD --implementer-model <verified-implementer-model>
+   pnpm qa:prepare -- --base origin/main --head HEAD --implementer-provider <verified-implementer-provider> --implementer-model <verified-implementer-model>
 
    Use the real base ref for the branch when it is not origin/main. Do not guess model names.
 4. Invoke the qa-cross-model subagent explicitly with a fresh context. Give it the generated input, repository guardrails and the exact diff. It must return only the documented JSON review and must not edit files.
