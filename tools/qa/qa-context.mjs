@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { argHelpers } from "../lib/args.mjs";
 
 export function sha256(value) {
   return crypto.createHash("sha256").update(String(value), "utf8").digest("hex");
@@ -56,4 +57,11 @@ export function readJsonFile(root, relativePath) {
   const filePath = absolutePath(root, relativePath);
   if (!fs.existsSync(filePath)) throw new Error("Missing " + relativePath);
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+
+export function qaRuntimeArgs(aiDir = ".ai") {
+  const root = process.cwd();
+  const { value: argValue } = argHelpers();
+  return { root, argValue, ...qaArtifactPaths(argValue, aiDir) };
 }
