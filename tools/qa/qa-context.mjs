@@ -1,5 +1,7 @@
 import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 
 export function sha256(value) {
   return crypto.createHash("sha256").update(String(value), "utf8").digest("hex");
@@ -35,4 +37,23 @@ export function workingTreeSnapshot(root) {
     unstagedDiffSha256: sha256(unstaged),
     stagedDiffSha256: sha256(staged),
   };
+}
+
+
+export function qaArtifactPaths(argValue, aiDir = ".ai") {
+  return {
+    contextPath: argValue("--context", path.join(aiDir, "workspace/qa/inputs/qa-context.json")),
+    outputPath: argValue("--output", path.join(aiDir, "workspace/qa/outputs/qa-review.json")),
+    manifestPath: argValue("--manifest", path.join(aiDir, "workspace/qa/outputs/qa-run.json")),
+  };
+}
+
+export function absolutePath(root, relativePath) {
+  return path.isAbsolute(relativePath) ? relativePath : path.join(root, relativePath);
+}
+
+export function readJsonFile(root, relativePath) {
+  const filePath = absolutePath(root, relativePath);
+  if (!fs.existsSync(filePath)) throw new Error("Missing " + relativePath);
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
