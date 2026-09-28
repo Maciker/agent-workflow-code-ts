@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { absolutePath, qaRuntimeArgs, readJsonFile, resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
 
-const { root, argValue, contextPath, outputPath, manifestPath } = qaRuntimeArgs();
+const { root, contextPath, outputPath, manifestPath } = qaRuntimeArgs();
 
 function fail(message) {
   throw new Error(message);
