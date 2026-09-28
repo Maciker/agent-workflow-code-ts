@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
-import path from "node:path";
 import { argHelpers } from "../lib/args.mjs";
 import { absolutePath, qaArtifactPaths, readJsonFile, resolveRefSha, sha256, workingTreeSnapshot } from "./qa-context.mjs";
 
