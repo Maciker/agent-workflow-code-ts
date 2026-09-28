@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { argHelpers } from "../lib/args.mjs";
-import { absolutePath, qaArtifactPaths, readJsonFile, sha256 } from "./qa-context.mjs";
+import { absolutePath, qaRuntimeArgs, readJsonFile, sha256 } from "./qa-context.mjs";
 
-const root = process.cwd();
-const { value: argValue } = argHelpers();
-const { contextPath, outputPath, manifestPath } = qaArtifactPaths(argValue);
+const { root, argValue, contextPath, outputPath, manifestPath } = qaRuntimeArgs();
 
 function fail(message) {
   throw new Error(message);
