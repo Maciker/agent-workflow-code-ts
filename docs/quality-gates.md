@@ -45,7 +45,7 @@ pnpm quality:agent
 Runs:
 
 ```text
-quality:full -> qa:gate
+quality:full -> prepr:gate
 ```
 
 This requires a real cross-model QA review at:
@@ -54,11 +54,15 @@ This requires a real cross-model QA review at:
 .ai/workspace/qa/outputs/qa-review.json
 ```
 
-Generate the QA input with:
+Prepare and record the exact-SHA review before running the strict gate:
 
 ```bash
-pnpm qa:prepare -- --base origin/main --head HEAD
+pnpm qa:prepare -- --base origin/main --head HEAD --implementer-model <verified-implementer-model>
+pnpm qa:record -- --reviewer-model <verified-reviewer-model> --implementer-model <verified-implementer-model>
+pnpm prepr:gate
 ```
+
+`pnpm qa:gate` validates the review JSON; `pnpm prepr:gate` additionally verifies SHA, input and working-tree integrity, distinct-model evidence and the deterministic quality gate.
 
 ## Rule
 
