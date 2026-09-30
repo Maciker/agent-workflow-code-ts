@@ -4,12 +4,21 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 
+type ReviewInput = {
+  pr: { number: number; url: string; baseSha: string; headSha: string };
+  current: { baseSha: string; headSha: string };
+  diff: { complete: boolean; baseSha: string; headSha: string; files: string[]; digest: string };
+  checks: { status: string; requiredCount: number; items: Array<{ name: string; required: boolean; status: string; conclusion: string; url?: string }> };
+  review: { decision: string; reviewer: Record<string, unknown>; implementer: Record<string, unknown>; findings: Array<Record<string, unknown>>; missing_tests: string[]; [key: string]: unknown };
+  publication?: { status: string; url: string; tool: string };
+  [key: string]: unknown;
+};
 const temporaryDirectories: string[] = [];
 afterEach(() => {
   for (const directory of temporaryDirectories.splice(0)) rmSync(directory, { recursive: true, force: true });
 });
 
-function baseInput(): any {
+function baseInput(): ReviewInput {
   return {
     pr: { number: 42, url: "https://example.test/pr/42", baseSha: "1111111111111111111111111111111111111111", headSha: "2222222222222222222222222222222222222222" },
     current: { baseSha: "1111111111111111111111111111111111111111", headSha: "2222222222222222222222222222222222222222" },
@@ -28,7 +37,7 @@ function baseInput(): any {
     publication: { status: "published", url: "https://example.test/comment/42", tool: "pr-comment" },
   };
 }
-function run(input: any) {
+function run(input: ReviewInput) {
   const directory = mkdtempSync(path.join(tmpdir(), "post-pr-review-"));
   temporaryDirectories.push(directory);
   const inputPath = path.join(directory, "input.json");
