@@ -3,7 +3,7 @@
 ## Flow
 
 ```text
-discovery -> plan -> approve -> execute -> review -> quality -> PR
+discovery -> plan -> approve -> execute -> review -> quality -> PR -> post-PR review
 ```
 
 ## Artifacts
@@ -16,6 +16,8 @@ discovery -> plan -> approve -> execute -> review -> quality -> PR
 | Execute | executor | code + commits + summary |
 | Review | reviewer / QA agents | `.ai/workspace/reviews/*.md` |
 | Quality | scripts / CI | deterministic checks |
+| PR | Cursor / provider adapter | pull request URL + exact base/head SHA |
+| Post-PR review | independent read-only reviewer | `.ai/workspace/pr-reviews/post-pr-review.json` + durable PR evidence |
 
 ## Rule
 

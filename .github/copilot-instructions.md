@@ -10,6 +10,7 @@ Read and follow the nearest AGENTS.md file first. The canonical source for workf
 4. TDD for behavior changes.
 5. Review after implementation.
 6. Run quality gates before finishing.
+7. After creating a PR, run pnpm pr:review against the exact PR base/head SHA; do not treat PENDING, BLOCKED or CHANGES_REQUESTED as approval.
 
 ## Build and validation
 
@@ -18,6 +19,7 @@ Read and follow the nearest AGENTS.md file first. The canonical source for workf
 - Full validation: pnpm quality:full.
 - QA review: pnpm qa:gate for the review JSON.
 - PR gate: pnpm prepr:gate after pnpm qa:prepare and pnpm qa:record.
+- Post-PR review: pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>.
 - Do not grow quality baselines automatically.
 
 ## Architecture and code rules
