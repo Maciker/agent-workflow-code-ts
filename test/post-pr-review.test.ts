@@ -9,7 +9,7 @@ afterEach(() => {
   for (const directory of temporaryDirectories.splice(0)) rmSync(directory, { recursive: true, force: true });
 });
 
-function baseInput() {
+function baseInput(): any {
   return {
     pr: { number: 42, url: "https://example.test/pr/42", baseSha: "1111111111111111111111111111111111111111", headSha: "2222222222222222222222222222222222222222" },
     current: { baseSha: "1111111111111111111111111111111111111111", headSha: "2222222222222222222222222222222222222222" },
@@ -28,7 +28,7 @@ function baseInput() {
     publication: { status: "published", url: "https://example.test/comment/42", tool: "pr-comment" },
   };
 }
-function run(input: Record<string, unknown>) {
+function run(input: any) {
   const directory = mkdtempSync(path.join(tmpdir(), "post-pr-review-"));
   temporaryDirectories.push(directory);
   const inputPath = path.join(directory, "input.json");
