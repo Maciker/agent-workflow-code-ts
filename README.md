@@ -3,12 +3,14 @@
 A portable workflow for agent-guided TypeScript development: clarify the problem,
 design small changes, implement with feedback, and verify the result.
 
-Maintained by Iker Macaya from hands-on development and training. Selected
-practices from Matt Pocock's skills and the `ai-learnings` collection are adapted
-to this repository's contracts, with [source attribution](THIRD_PARTY_NOTICES.md).
+Maintained by Iker Macaya from hands-on development and training. The workflow
+adapts selected practices from Matt Pocock's skills and the `ai-learnings`
+collection; an optional UI design pack includes Emil Kowalski's skills, all with
+[source attribution](THIRD_PARTY_NOTICES.md).
 
 Start with the [workflow guide](docs/curated-workflows.md), the
-[source intake matrix](docs/source-intake.md), or the quickstart below.
+[skills catalog](docs/skills.md), the [source intake matrix](docs/source-intake.md),
+or the quickstart below.
 
 This repository is not an application. It is a **workflow system**: a canonical
 set of agent instructions, commands, skills and policies in `.ai/`, projected

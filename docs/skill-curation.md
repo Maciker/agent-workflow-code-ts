@@ -27,6 +27,10 @@ The boilerplate separates reusable knowledge from executable workflows.
 |---|---|
 | `frontend-patterns` | React projects using CSS Modules and optional React Query store hooks |
 
+## Optional design and frontend pack
+
+The thirteen skills from Emil Kowalski's design and engineering collection are optional platform-specific knowledge packs. The complete trigger map is in [the skills catalog](skills.md); reviewed source revisions, companion files, licensing, and local adaptations are in [source intake](source-intake.md). `ui-prototype` is named separately from the repository's existing `/prototype` command.
+
 ## Rules
 
 The curated knowledge additions are `codebase-design`, `domain-modeling`,
