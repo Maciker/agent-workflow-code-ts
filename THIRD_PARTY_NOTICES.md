@@ -12,6 +12,18 @@ Adaptations cover the six added knowledge skills (`codebase-design`, `domain-mod
 
 These are curated adaptations maintained here, not an upstream mirror, endorsement, or unmodified Matt Pocock distribution. Local workflow, test and authorization rules take precedence. See [the intake matrix](docs/source-intake.md) for per-source decisions.
 
+## Emil Kowalski — Skills for Designers and Engineers
+
+Source: https://github.com/emilkowalski/skills
+
+Reviewed revision: `d16ebe60d09a5ba2afcb7054ede9d0a10c9f6128` (2026-09-23).
+
+Copyright (c) 2026 Emil Kowalski. Licensed under MIT; the complete notice is in [licenses/emilkowalski-skills-MIT.txt](licenses/emilkowalski-skills-MIT.txt).
+
+Thirteen skills and their companion Markdown resources are included under `.ai/skills/`, with the same content projected into Cursor, portable/Codex, and Hermes skill directories. The imported skill bodies and supporting files are retained; frontmatter descriptions are shortened for clear triggers and Codex's skill-index budget, and upstream `prototype` is named `ui-prototype` locally to avoid collision with the existing workflow command.
+
+This is a maintained integration of the reviewed revision, not an automatic upstream mirror or endorsement. Repository-specific approval, implementation, testing, and review requirements take precedence. See [the intake matrix](docs/source-intake.md) for per-skill decisions.
+
 ## Iker Macaya — ai-learnings training collection
 
 Source: https://github.com/Maciker/ai-learnings

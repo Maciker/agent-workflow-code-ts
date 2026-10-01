@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Integrated all 13 design and frontend skills from Emil Kowalski's MIT-licensed
+  collection, including companion resources and generated Cursor, Codex/portable,
+  and Hermes projections. Shortened discovery triggers for the Codex budget and
+  named the imported `prototype` skill `ui-prototype` to avoid command collision.
+
 - Curated six knowledge skills and nine workflow commands from reviewed
   learning sources, with explicit source revisions and MIT attribution.
 - Added spec, ticket, diagnosis and domain-document templates; extended existing
