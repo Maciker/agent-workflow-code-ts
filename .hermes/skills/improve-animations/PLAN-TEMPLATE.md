@@ -1,6 +1,6 @@
 # Plan Template
 
-Every plan written by `improve-animations` follows this structure. The executor may be a less capable model with zero context and zero taste — the plan must contain everything, exactly. No references to "the audit above" or "the easing we discussed."
+Every candidate written by `improve-animations` follows this structure and lives under `.ai/workspace/tasks/<task-id>/animation-plans/`. It is an audit handoff, not permission to implement. Production work must go through canonical `/plan`, wait for approval, and then follow `/execute` and the repository's normal gates. The implementation plan must contain everything, exactly; no references to "the audit above" or "the easing we discussed."
 
 ```markdown
 # NNN — <Short imperative title>
@@ -70,4 +70,4 @@ imitate (token names, file placement, prop patterns):
 - One plan per finding. If two findings share every file and the same fix pattern (e.g. the same easing token swap across components), they may merge into one plan.
 - Pull every value from [AUDIT.md](AUDIT.md) — never approximate from memory.
 - The feel check is not optional. Motion can be mechanically correct and still feel wrong; give the executor (or the human reviewing the executor's diff) concrete things to watch for in slow motion.
-- After writing plans, create or update `plans/README.md` with: a table of plans (number, title, severity, status), the recommended execution order, and any dependencies between plans.
+- After writing candidate plans, create or update `.ai/workspace/tasks/<task-id>/animation-plans/README.md` with: a table of plans (number, title, severity, status), the recommended review order, and any dependencies between plans.

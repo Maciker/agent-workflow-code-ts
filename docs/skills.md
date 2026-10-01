@@ -34,7 +34,7 @@ The following skills are available for UI work. Use only the ones that match the
 | `review-animations` | Explicitly invoked, read-only animation review |
 | `write-swift` | Writing, reviewing, or debugging Swift |
 
-`ui-prototype` is distinct from the existing `/prototype` command, which runs the repository's guarded prototyping workflow. Review and audit skills report findings; implementation still follows the repository's plan, authorization, TDD, review, and quality gates. Source revisions and license details are in [source intake](source-intake.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
+`ui-prototype` is distinct from the existing `/prototype` command, which records experiment evidence and runs the repository's guarded prototyping workflow. The selected animation or UI prototype is handed to canonical `/plan` and `/execute`; audit and review skills do not replace approval, TDD, review, deterministic quality, or cross-model QA gates. Source revisions and license details are in [source intake](source-intake.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
 
 ## Deprecated aliases
 

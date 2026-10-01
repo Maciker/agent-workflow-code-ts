@@ -7,10 +7,10 @@ Ready-to-build implementations for the cases that come up most in a React Native
 ## Setup the recipes assume
 
 ```bash
-npx expo install react-native-reanimated react-native-worklets react-native-gesture-handler expo-haptics
+pnpm exec expo install react-native-reanimated react-native-worklets react-native-gesture-handler expo-haptics
 ```
 
-(`react-native-keyboard-controller` only for the keyboard recipe.) `expo install`, not `npm install` — it resolves the versions that match the SDK. The worklets Babel plugin is configured by `babel-preset-expo` automatically.
+(`react-native-keyboard-controller` only for the keyboard recipe.) In this pnpm workflow, use `pnpm exec expo install` to resolve versions that match the SDK; in another project, use its declared package manager's local Expo CLI equivalent. Run installs only within an approved plan and authorized execution. The worklets Babel plugin is configured by `babel-preset-expo` automatically.
 
 `GestureHandlerRootView` wraps the app once — in Expo Router, the root `_layout`:
 
@@ -255,7 +255,7 @@ Entrance animations are for content the user asked for and is waiting on. A list
 Needs its own module and a one-time provider ([Expo keyboard guide](https://docs.expo.dev/guides/keyboard-handling/)):
 
 ```bash
-npx expo install react-native-keyboard-controller
+pnpm exec expo install react-native-keyboard-controller
 ```
 
 ```jsx

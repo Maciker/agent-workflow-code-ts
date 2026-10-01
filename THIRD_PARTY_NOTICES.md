@@ -20,7 +20,7 @@ Reviewed revision: `d16ebe60d09a5ba2afcb7054ede9d0a10c9f6128` (2026-09-23).
 
 Copyright (c) 2026 Emil Kowalski. Licensed under MIT; the complete notice is in [licenses/emilkowalski-skills-MIT.txt](licenses/emilkowalski-skills-MIT.txt).
 
-Thirteen skills and their companion Markdown resources are included under `.ai/skills/`, with the same content projected into Cursor, portable/Codex, and Hermes skill directories. The imported skill bodies and supporting files are retained; frontmatter descriptions are shortened for clear triggers and Codex's skill-index budget, and upstream `prototype` is named `ui-prototype` locally to avoid collision with the existing workflow command.
+Thirteen skills and their companion Markdown resources are included under `.ai/skills/`, with the same content projected into Cursor, portable/Codex, and Hermes skill directories. The imported skill bodies and supporting files are retained with narrow local adaptations: frontmatter descriptions are shortened for clear triggers and Codex's skill-index budget; `animate-expo` uses the declared package manager; animation-plan paths and execution are aligned with the repository workflow; and the selected prototype is handed off through the approved plan process. Upstream `prototype` is named `ui-prototype` locally to avoid collision with the existing workflow command. Per-file details are in [source intake](docs/source-intake.md).
 
 This is a maintained integration of the reviewed revision, not an automatic upstream mirror or endorsement. Repository-specific approval, implementation, testing, and review requirements take precedence. See [the intake matrix](docs/source-intake.md) for per-skill decisions.
 
