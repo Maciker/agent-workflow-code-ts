@@ -19,6 +19,7 @@ Never treat an agent response as accepted until checks have passed and a human h
 7. Run deterministic quality gates before opening or merging a PR.
 8. For agent-generated changes, run cross-model QA before final approval.
 9. Before opening an agent-generated PR, run `pnpm prepr:gate`; it must validate the exact base/head SHA and verified distinct-model evidence.
+10. After creating a PR, run `pnpm pr:review` against the exact PR base/head SHA and keep the result out of merge-ready states until it is APPROVED.
 
 ## Commands
 
@@ -29,6 +30,7 @@ pnpm qa:prepare -- --base origin/main --head HEAD
 pnpm qa:gate
 pnpm qa:record -- --reviewer-model <model> --implementer-model <model>
 pnpm prepr:gate
+pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>
 pnpm quality:agent
 ```
 
@@ -41,11 +43,12 @@ pnpm quality:agent
 - The deterministic ratchet reports no new findings.
 - Cross-model QA passes for agent-generated changes.
 - `pnpm prepr:gate` passes against the exact current SHA with verified distinct-model evidence.
+- `pnpm pr:review` returns `APPROVED` for the current PR SHA, with durable evidence and no actionable findings.
 - The review report contains no blocking issues.
 
 ## Context routing
 
-- Use `.ai/commands/` for reusable task prompts. The `.ai/commands/pre-pr.md` procedure is mandatory before the supported PR path.
+- Use `.ai/commands/` for reusable task prompts. The `.ai/commands/pre-pr.md` procedure is mandatory before the supported PR path; `.ai/commands/post-pr-review.md` is mandatory after PR creation.
 - Use `.ai/agents/` for specialized agent instructions.
 - Use `.ai/skills/` for repeatable procedures.
 - Store generated PRDs, plans, summaries and reviews under `.ai/workspace/`.

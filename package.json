@@ -54,7 +54,8 @@
     "doctor": "node tools/diagnostics/doctor.mjs",
     "setup:hooks": "bash scripts/install-githooks.sh",
     "qa:record": "node tools/qa/record-qa-run.mjs",
-    "prepr:gate": "node tools/qa/pre-pr-gate.mjs"
+    "prepr:gate": "node tools/qa/pre-pr-gate.mjs",
+    "pr:review": "node tools/pr/post-pr-review.mjs"
   },
   "dependencies": {
     "yaml": "^2.7.0"

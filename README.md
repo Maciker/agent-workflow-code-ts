@@ -60,6 +60,7 @@ src/, test/     example TypeScript package
 6. Cross-model QA for agent-generated changes.
 7. Deterministic quality gates before opening or merging a PR.
 8. Before the supported PR path, run `.ai/commands/pre-pr.md` and require `pnpm prepr:gate` to pass against the exact SHA.
+9. After PR creation, run `.ai/commands/post-pr-review.md` and require `pnpm pr:review` to return `APPROVED` before merge is considered.
 
 ## Common commands
 
@@ -78,6 +79,7 @@ pnpm qa:prepare          # build an exact-SHA cross-model QA input from the diff
 pnpm qa:record           # record verified implementer/reviewer model identities
 pnpm qa:gate             # validate the QA review JSON
 pnpm prepr:gate          # strict deterministic + exact-SHA PR gate
+pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>  # post-PR review state
 pnpm dogfood:check       # check scaffold and adapter structure
 pnpm doctor              # environment diagnostics
 ```

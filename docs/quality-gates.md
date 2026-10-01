@@ -64,6 +64,16 @@ pnpm prepr:gate
 
 `pnpm qa:gate` validates the review JSON; `pnpm prepr:gate` additionally verifies SHA, input and working-tree integrity, distinct-model evidence and the deterministic quality gate.
 
+## Post-PR review
+
+After a PR is created, the portable post-PR review is a separate gate:
+
+```bash
+pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>
+```
+
+It returns exactly one of `APPROVED`, `CHANGES_REQUESTED`, `PENDING` or `BLOCKED`. The input must contain the exact PR base/head SHA, a complete diff snapshot, required checks, comments, existing reviews, verified implementer/reviewer identities and durable publication evidence. Any new push invalidates the result and requires a fresh input and review. Only `APPROVED` is eligible for human merge consideration; this workflow never merges, deploys or auto-merges.
+
 ## Rule
 
 Deterministic checks are hard gates. LLM review is a semantic gate. Do not use one as a replacement for the other.
