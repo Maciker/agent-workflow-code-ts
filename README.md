@@ -93,6 +93,33 @@ Codex, GitHub Copilot, portable agentskills.io skills, and Hermes Agent. See
 [`docs/vendors.md`](docs/vendors.md) and [`docs/hermes.md`](docs/hermes.md). Do not
 edit generated vendor files by hand.
 
+## Downstream repositories
+
+This repository is the canonical source for reusable workflow changes. Whenever
+its shared skills, agents, commands, policies, templates, quality gates, or vendor
+integration change, review and carry the corresponding changes to every repository
+below as part of the same integration effort. This standing list is the propagation
+checklist for future work; contributors should not need to restate the target
+repositories in each task.
+
+Keep each destination's canonical layout and use its own sync or export process.
+Regenerate vendor-specific files in the destination repository instead of copying
+generated output from here. Track the source commit in the downstream change and
+run that repository's relevant validation. If a change does not apply to a listed
+repository, record the reason in the integration notes or pull request.
+
+| Repository | Canonical integration location |
+| --- | --- |
+| [agent-workflow-code-ts-nextjs](https://github.com/Maciker/agent-workflow-code-ts-nextjs) | `.ai/skills/` |
+| [burnoutdevs-744f97e4](https://github.com/Maciker/burnoutdevs-744f97e4) | `.ai/` |
+| [astro-warhammer](https://github.com/Maciker/astro-warhammer) | `.ai/` |
+| [geospatial-quality-explorer](https://github.com/Maciker/geospatial-quality-explorer) | `.ai/` |
+| [territorial-change-monitor](https://github.com/Maciker/territorial-change-monitor) | `.ai/` |
+| [spatial-ml-benchmark](https://github.com/Maciker/spatial-ml-benchmark) | `.ai/` |
+| [macaya-web](https://github.com/Maciker/macaya-web) | `.ai/` |
+| [agent-workflow-hermes-runner](https://github.com/Maciker/agent-workflow-hermes-runner) | `ai/` |
+| [net-boilerplate](https://github.com/Maciker/net-boilerplate) | `.agents/skills/` |
+
 ## Version additions
 
 The full history is in [`CHANGELOG.md`](CHANGELOG.md). Highlights:
