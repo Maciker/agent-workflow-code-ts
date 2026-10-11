@@ -51,3 +51,7 @@ Use this command after the executor finishes an implementation and before Cursor
 10. Immediately after the PR is created, invoke `.ai/commands/post-pr-review.md`. The post-PR reviewer must inspect the complete PR diff, checks, comments and existing reviews, then run `pnpm pr:review` against the exact PR base/head SHA. Do not mark the PR ready to merge while the result is `PENDING`, `BLOCKED` or `CHANGES_REQUESTED`.
 
 The gate protects the supported workflow path. A vendor or external integration that creates a PR without running this command may bypass it and must be documented as outside the covered path.
+
+## PR description
+
+Use repository-root `docs/pr-descriptions.md` after the gate passes. Describe resulting behavior, provide relevant before/after evidence, and state rollback difficulty and affected consumers. Scale detail to the change; a diagram is optional and never replaces verification. Preserve the repository's existing PR template and exact-SHA review evidence.

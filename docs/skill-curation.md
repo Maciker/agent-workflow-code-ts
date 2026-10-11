@@ -29,7 +29,9 @@ The boilerplate separates reusable knowledge from executable workflows.
 
 ## Optional design and frontend pack
 
-The thirteen skills from Emil Kowalski's design and engineering collection are optional platform-specific knowledge packs. The complete trigger map is in [the skills catalog](skills.md); reviewed source revisions, companion files, licensing, and local adaptations are in [source intake](source-intake.md). `ui-prototype` is named separately from the repository's existing `/prototype` command.
+The fifteen skills from Emil Kowalski's design and engineering collection are optional platform-specific knowledge packs. The complete trigger map is in [the skills catalog](skills.md); reviewed source revisions, companion files, licensing, and local adaptations are in [source intake](source-intake.md). `ui-prototype` is named separately from the repository's existing `/prototype` command. `break-ui` preparation belongs to the executor; reviewers do not create fixtures or toggle routes. `animation-performance` separates code findings from device measurements.
+
+`retro` is an optional environment-improvement discipline. Invoke `/retro` for a session retrospective; recommendations return to the ordinary planner/executor process and never automatically expand a feature task.
 
 ## Rules
 

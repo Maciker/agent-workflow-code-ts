@@ -21,6 +21,8 @@ The following skills are available for UI work. Use only the ones that match the
 | Skill | Use when |
 | --- | --- |
 | `animate` | Designing or implementing web motion and transitions |
+| `animation-performance` | Diagnosing dropped frames, costly animation properties or per-frame rendering; web-only |
+| `break-ui` | Stress-testing UI against realistic worst-case data; includes `CATALOG.md` and executor-owned dev fixtures |
 | `animate-expo` | Building or debugging animation in React Native or Expo |
 | `animation-vocabulary` | Finding the name of a described animation effect |
 | `apple-design` | Reviewing or designing gesture-driven, spring-based web UI |
@@ -50,6 +52,7 @@ The following skills are available for UI work. Use only the ones that match the
 | `diagnosing-bugs` | Building a reproduction and testing causes before a fix |
 | `writing-for-agents` | Authoring focused instructions and context pointers |
 | `grilling` | Stress-testing a plan, decision or idea before acting |
+| `retro` | User-requested retrospective based on session evidence; propose improvements to checks, navigation and tooling |
 
 `grill-me` is the user-started entry point for `grilling`.
 
