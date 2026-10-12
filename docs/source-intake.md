@@ -135,7 +135,7 @@ Downstream propagation is a release step after canonical independent QA. Review 
 
 Validation for this intake: typecheck, lint, all 9 existing tests, architecture, dead-code, duplication and ratchet checks passed. Vendor parity, Codex adapter/index checks (5,702 / 8,000 bytes, 32 skills), dogfood and whitespace checks passed. These are instruction-content changes; no runtime logic, dependency or folder-layout change is included. UI/device scenarios above were reviewed as instruction paths, not executed against a product UI.
 
-Release status: independent exact-SHA QA remains pending. The current host does not expose a verified exact implementer model identifier; no model metadata is fabricated. Per `.ai/commands/pre-pr.md`, the branch must not be promoted to a PR until verified independent evidence and `pnpm prepr:gate` pass. Downstream propagation therefore remains pending.
+Review limitation and maintainer direction: the current host does not expose a verified exact implementer model identifier, so this run cannot satisfy verified cross-model evidence or claim a passing `prepr:gate`. After this limitation was disclosed, the maintainer explicitly directed creation, review and merge of this PR on 2026-10-12. Treat that direction as an exception for this content-only intake, not a change to the repository gates. Perform an independent read-only agent review, inspect CI and publish the limitation with the review; do not fabricate model metadata or gate approval. Downstream propagation is tracked separately after the canonical merge.
 
 ## Maintainer intake checklist
 
