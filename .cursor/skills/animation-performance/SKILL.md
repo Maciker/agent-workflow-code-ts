@@ -145,13 +145,13 @@ const style = { "--swipe-amount": `${draggedDistance}px` };
 const style = { transform: `translateY(${draggedDistance}px)` };
 ```
 
-CSS variables inherit, so changing one on a parent triggers style recalculation for every child. The more content, the slower each frame. Suspect this whenever a `transform` animation degrades as content grows. It's the same reason Framer Motion's shorthands aren't accelerated.
+CSS variables inherit, so changing one on a parent triggers style recalculation for every child. The more content, the slower each frame. Suspect this whenever a `transform` animation degrades as content grows. Some library versions implement shorthands through CSS variables or main-thread work; inspect the installed version and actual driver before changing them.
 
 **Blur.** `filter: blur()` gets expensive fast, especially in Safari. Keep animated blur under 20px; 2–5px is enough to soften a crossfade.
 
 ## `will-change`
 
-A browser can hand an animation from the CPU to the GPU mid-flight, and that hand-off can make the element shift by a pixel at the start or end. `will-change` promotes the element up front so no hand-off happens:
+A browser can hand an animation from the CPU to the GPU mid-flight, and that hand-off can make the element shift by a pixel at the start or end. `will-change` hints that the browser should prepare for the animation; it may promote a layer, but promotion and removal of the visual shift must be verified:
 
 ```css
 .drawer {
@@ -159,9 +159,9 @@ A browser can hand an animation from the CPU to the GPU mid-flight, and that han
 }
 ```
 
-**Add it only once you see the shift or measured dropped frames.** Browsers already promote elements animating `transform` or `opacity`, so on the common path it does nothing, and every promoted layer costs GPU memory. Put it on the element that animates, never on `*` or large containers.
+**Add it only once you see the shift or measured dropped frames.** Browsers may already promote elements animating `transform` or `opacity`, so the hint can be redundant; any extra promoted layers consume GPU memory. Put it on the element that animates, never on `*` or large containers.
 
-Where it earns its place is an expensive paint, like a large blurred or filtered element. Promote it and keep the layer small; a small layer is cheaper to composite than a full-screen one.
+Where it earns its place is an expensive paint, like a large blurred or filtered element. Evaluate whether promotion helps and keep the layer small; a small layer generally costs less to composite than a full-screen one.
 
 ## Should You Avoid JS Animation?
 
