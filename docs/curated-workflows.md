@@ -20,6 +20,9 @@ This repository is Iker Macaya's maintained TypeScript workflow: shared instruct
 | Resume in a fresh session | `/compact-progress` | Concise handoff with artifact pointers |
 | Resolve an active merge/rebase | `/resolve-conflicts` | Intent-preserving resolution and checks |
 | Curate an instruction pack | `/review-skill` | Focused, attributed, validated instructions |
+| Learn from an execution session | `/retro` | Evidence-backed recommendations for checks, instructions and tooling |
+
+For UI edge cases use `break-ui`; fixture/toggle preparation belongs to the authorized executor, and reviewers remain read-only. Use `animation-performance` for measured web-motion diagnosis, not as a reason to add animations. See [the skill catalog](skills.md). PR writing follows [proportionate description guidance](pr-descriptions.md) and retains all existing QA gates.
 
 The slash names identify canonical prompt documents in `.ai/commands/`; native slash-command support varies by tool. Where the adapter does not expose a command, ask the agent to read that document and substitute its arguments. The shared skills are projected to Cursor, portable/Codex and Hermes locations; Copilot receives workflow prompts. No Matt-specific setup tool is required.
 

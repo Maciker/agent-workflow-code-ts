@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Added optional `break-ui` (with its worst-case catalog), `animation-performance`,
+  and adapted `retro` skills, plus a `/retro` procedure. Retained the flat skill
+  layout and generated Cursor, Codex/portable and Hermes projections.
+- Incorporated reviewed Matt Pocock improvements for mutation evidence, test
+  boundary coverage, standards discovery, tracker relationships, issue intake
+  and unambiguous grilling; added proportionate PR-description guidance.
+
 - Integrated all 13 design and frontend skills from Emil Kowalski's MIT-licensed
   collection, including companion resources and generated Cursor, Codex/portable,
   and Hermes projections. Shortened discovery triggers, aligned animation planning,
