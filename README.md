@@ -120,6 +120,14 @@ repository, record the reason in the integration notes or pull request.
 | [agent-workflow-hermes-runner](https://github.com/Maciker/agent-workflow-hermes-runner) | `ai/` |
 | [net-boilerplate](https://github.com/Maciker/net-boilerplate) | `.agents/skills/` |
 
+## Hackathon projects
+
+The [Hackathons index](https://github.com/Maciker/hackathons) lists the geospatial projects built with this workflow:
+
+- [geospatial-quality-explorer](https://github.com/Maciker/geospatial-quality-explorer): validate a bounded vector dataset and review traceable findings through CLI, API, browser and QGIS.
+- [territorial-change-monitor](https://github.com/Maciker/territorial-change-monitor): offline comparison of a Sentinel-2 pair that reports candidate spectral change with provenance.
+- [spatial-ml-benchmark](https://github.com/Maciker/spatial-ml-benchmark): majority baseline versus JavaScript Random Forest under random and spatial evaluation.
+
 ## Version additions
 
 The full history is in [`CHANGELOG.md`](CHANGELOG.md). Highlights:
