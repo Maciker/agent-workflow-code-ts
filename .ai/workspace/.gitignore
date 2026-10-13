@@ -9,6 +9,7 @@ qa/inputs/
 qa/outputs/
 qa/reports/
 loop/
+pr-reviews/
 repo-analysis/*
 !repo-analysis/.gitkeep
 tasks/*
