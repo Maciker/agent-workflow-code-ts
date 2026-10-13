@@ -110,15 +110,9 @@ repository, record the reason in the integration notes or pull request.
 
 | Repository | Canonical integration location |
 | --- | --- |
-| [agent-workflow-code-ts-nextjs](https://github.com/Maciker/agent-workflow-code-ts-nextjs) | `.ai/skills/` |
-| [burnoutdevs-744f97e4](https://github.com/Maciker/burnoutdevs-744f97e4) | `.ai/` |
-| [astro-warhammer](https://github.com/Maciker/astro-warhammer) | `.ai/` |
 | [geospatial-quality-explorer](https://github.com/Maciker/geospatial-quality-explorer) | `.ai/` |
 | [territorial-change-monitor](https://github.com/Maciker/territorial-change-monitor) | `.ai/` |
 | [spatial-ml-benchmark](https://github.com/Maciker/spatial-ml-benchmark) | `.ai/` |
-| [macaya-web](https://github.com/Maciker/macaya-web) | `.ai/` |
-| [agent-workflow-hermes-runner](https://github.com/Maciker/agent-workflow-hermes-runner) | `ai/` |
-| [net-boilerplate](https://github.com/Maciker/net-boilerplate) | `.agents/skills/` |
 
 ## Hackathon projects
 
