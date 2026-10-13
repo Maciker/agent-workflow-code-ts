@@ -39,4 +39,4 @@ Use domain vocabulary only where it removes ambiguity. Create glossary/ADR files
 
 ## Adoption limits
 
-These instructions are not proof that a model will follow them, and Markdown permissions are not sandbox enforcement. Structural checks, adapter synchronization and example walkthroughs are different from live validation in each vendor. Source license notices travel with copied adaptations. No external service, MCP server or course dependency is enabled by this integration.
+These instructions are not proof that a model will follow them, and Markdown permissions are not sandbox enforcement. Structural checks, adapter synchronization and example walkthroughs are different from live validation in each vendor. Source license notices travel with copied adaptations. The curated skills and commands add no external service, MCP server or course dependency; the repository-wide MCP servers are described in [MCP](mcp.md).

@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+- QA identity evidence is now honest: identities are compared as lowercase
+  `provider:model`, both providers are required, and run manifests record
+  `harness` (reviewer identity from the `pnpm qa:run` provider call) or
+  `declared` (typed with `pnpm qa:record`) instead of `verified`.
+  `pnpm prepr:gate -- --require-harness` accepts only harness evidence, and the
+  mock provider never counts as an independent reviewer. `AI_PROVIDER`/`AI_MODEL`
+  are no longer used as the implementer identity.
+- Any entry in `blocking_findings` now fails `qa:gate`, `prepr:gate` and the
+  post-PR review, whatever its severity.
+- Post-PR review: failed checks are `BLOCKED` (were `PENDING`), `complete`
+  without a required check is `BLOCKED`, unknown check states are `BLOCKED`.
+  Added an example input, a GitHub CLI collection procedure and the explicit
+  evaluate, publish, evaluate-again sequence; `pr-reviews/` is git-ignored.
+- `qa-cross-model` documents that generated subagents inherit the session
+  model; a concrete `model` in `.ai/agents` frontmatter is now projected to
+  Cursor and Codex.
+- Unified task artifacts under `.ai/workspace/tasks/<task-id>/`; plans carry an
+  `Approval` section that the executor checks before starting.
+- Aligned commit discipline (commit on green, refactor separately), the fix-round
+  limit (2) and the QA command sequence across `AGENTS.md`, agents, skills and docs.
+- Rewrote `AGENTS.md` as the current contract without per-version sections.
+- Documented that Cursor and Codex start the projected MCP servers, the full
+  workflow's prerequisites and the tools without an adapter.
+- Codex pre-tool hook covers more destructive `rm` forms and all generated
+  directories; the worktree sandbox installs with `--frozen-lockfile`.
+- Removed the unused `qa` and `security` ratchet baselines.
 - Added optional `break-ui` (with its worst-case catalog), `animation-performance`,
   and adapted `retro` skills, plus a `/retro` procedure. Retained the flat skill
   layout and generated Cursor, Codex/portable and Hermes projections.

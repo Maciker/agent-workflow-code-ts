@@ -57,12 +57,12 @@ This requires a real cross-model QA review at:
 Prepare and record the exact-SHA review before running the strict gate:
 
 ```bash
-pnpm qa:prepare -- --base origin/main --head HEAD --implementer-model <verified-implementer-model>
-pnpm qa:record -- --reviewer-model <verified-reviewer-model> --implementer-model <verified-implementer-model>
+pnpm qa:prepare -- --base origin/main --head HEAD --implementer-provider <provider> --implementer-model <model>
+pnpm qa:record -- --reviewer-provider <provider> --reviewer-model <model>
 pnpm prepr:gate
 ```
 
-`pnpm qa:gate` validates the review JSON; `pnpm prepr:gate` additionally verifies SHA, input and working-tree integrity, distinct-model evidence and the deterministic quality gate.
+`pnpm qa:gate` validates the review JSON; `pnpm prepr:gate` additionally checks SHA, input and working-tree integrity and that the reviewer and implementer identities differ. It does not run the deterministic checks: `pnpm quality:agent` runs `quality:full` and then `prepr:gate`. Identities recorded with `qa:record` are declared, not machine-verified; `pnpm qa:run` records the reviewer identity from its provider call (see `.ai/commands/pre-pr.md`).
 
 ## Post-PR review
 
@@ -72,7 +72,7 @@ After a PR is created, the portable post-PR review is a separate gate:
 pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>
 ```
 
-It returns exactly one of `APPROVED`, `CHANGES_REQUESTED`, `PENDING` or `BLOCKED`. The input must contain the exact PR base/head SHA, a complete diff snapshot, required checks, comments, existing reviews, verified implementer/reviewer identities and durable publication evidence. Any new push invalidates the result and requires a fresh input and review. Only `APPROVED` is eligible for human merge consideration; this workflow never merges, deploys or auto-merges.
+It returns exactly one of `APPROVED`, `CHANGES_REQUESTED`, `PENDING` or `BLOCKED`. The input must contain the exact PR base/head SHA, a complete diff snapshot, required checks, comments, existing reviews, exact implementer/reviewer identities and durable publication evidence. All of it is supplied by the caller; see the manual procedure in `docs/post-pr-review.md`. Any new push invalidates the result and requires a fresh input and review. Only `APPROVED` is eligible for human merge consideration; this workflow never merges, deploys or auto-merges.
 
 ## Rule
 
