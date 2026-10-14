@@ -40,3 +40,15 @@ Base reviewed: `aef3f9b210a83d8648b46da40ddfa63b717ce6b7`.
 - This was a targeted pattern scan, not a dedicated secret-scanner certification or a complete audit of attachments, private review discussions, provider-side data or inaccessible refs. Do not infer absence of all sensitive material.
 
 Before merge, obtain a real cross-model review of the final PR diff and check the hosted CI results. No AI provider credentials were configured in the preparation environment, so quality:agent has not been certified. Visibility remains an owner decision.
+
+## Publication review — 2026-10-13
+
+Base reviewed: `977e5dcd698bc4e9ffc5d437006ff081cbd6a3cc`. This review supersedes the 2026-09-20 evidence for the publication decision.
+
+- Ran gitleaks 8.21.2 over the full history of every ref (`--log-opts=--all`, all branches, no tags present). Two `generic-api-key` matches in `.env.example` (two historical commits) were triaged as false positives: the variable is an empty placeholder. No other findings.
+- Ran gitleaks over exported issue and PR bodies, issue/PR comments, review comments and the logs of all 32 retrievable Actions runs: no findings. No releases, no tags and Discussions disabled.
+- No tracked `.env`, key or certificate files in any reachable commit; only `.env.example`.
+- LICENSE (MIT), THIRD_PARTY_NOTICES.md and `licenses/` retained unchanged.
+- Current required CI check names on `main`: `Quality (Node 22)` and `Quality (Node 24)`.
+- Branches whose three-way merge into `main` is a no-op (all content already in `main`, covering squash merges) were deleted; branches with unproven integration were kept. No history was rewritten and no tags were touched.
+- Limits: gitleaks is pattern/entropy based and does not certify the absence of all sensitive material; attachments in issue bodies and provider-side data were not downloaded. `quality:agent` and `pnpm pr:review` were not run in this environment (no AI provider credentials).
