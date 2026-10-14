@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repository is a guardrails boilerplate for agent-guided TypeScript development.
+This repository is a guardrails boilerplate for agent-guided TypeScript development. This file is the current contract; version history lives in `CHANGELOG.md`.
 
 ## Operating principle
 
@@ -10,15 +10,15 @@ Never treat an agent response as accepted until checks have passed and a human h
 
 ## Required workflow
 
-1. Discovery before solution design.
+1. Discovery before solution design. Use `/repo-discovery` first on an unfamiliar repository.
 2. Plan before implementation.
-3. Human approval before execution.
+3. Human approval before execution: the plan's `Approval` section names the approver; the executor does not start without it.
 4. TDD for every logic change.
-5. Commit after each completed Red-Green-Refactor cycle.
+5. Commit on green; commit a refactor separately; never commit on red (see `git-strategy`).
 6. Review after execution.
 7. Run deterministic quality gates before opening or merging a PR.
 8. For agent-generated changes, run cross-model QA before final approval.
-9. Before opening an agent-generated PR, run `pnpm prepr:gate`; it must validate the exact base/head SHA and verified distinct-model evidence.
+9. Before opening an agent-generated PR, run `pnpm prepr:gate`; it validates the exact base/head SHA and that the declared reviewer and implementer models differ.
 10. After creating a PR, run `pnpm pr:review` against the exact PR base/head SHA and keep the result out of merge-ready states until it is APPROVED.
 
 ## Commands
@@ -26,12 +26,14 @@ Never treat an agent response as accepted until checks have passed and a human h
 ```bash
 pnpm quality:fast
 pnpm quality:full
-pnpm qa:prepare -- --base origin/main --head HEAD
+pnpm qa:prepare -- --base origin/main --head HEAD --implementer-provider <provider> --implementer-model <model>
+pnpm qa:run                     # reviewer from AI_QA_*; or save a review and run qa:record
+pnpm qa:record -- --reviewer-provider <provider> --reviewer-model <model>
 pnpm qa:gate
-pnpm qa:record -- --reviewer-model <model> --implementer-model <model>
 pnpm prepr:gate
 pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>
 pnpm quality:agent
+pnpm ai:sync && pnpm vendors:check   # after changing .ai/, AGENTS.md or vendor sync logic
 ```
 
 ## Done means
@@ -41,83 +43,31 @@ pnpm quality:agent
 - Typecheck, lint and tests pass.
 - Architecture rules pass.
 - The deterministic ratchet reports no new findings.
-- Cross-model QA passes for agent-generated changes.
-- `pnpm prepr:gate` passes against the exact current SHA with verified distinct-model evidence.
-- `pnpm pr:review` returns `APPROVED` for the current PR SHA, with durable evidence and no actionable findings.
-- The review report contains no blocking issues.
+- Cross-model QA passes for agent-generated changes, with no blocking findings.
+- `pnpm prepr:gate` passes against the exact current SHA with distinct reviewer and implementer identities; the PR states whether that evidence is `harness` or `declared`.
+- `pnpm pr:review` returns `APPROVED` for the current PR SHA, with published evidence and no actionable findings.
+
+## Skills
+
+- `xp-tdd-practices`: behavior changes, the TDD cycle and TPP.
+- `testing-standards`: writing or reviewing tests.
+- `git-strategy`: branches and commits.
+- `architecture-hexagonal`: module layout, dependency direction, ports/adapters and layer boundaries.
+- `design-principles`: naming, functions, classes/modules, comments and error handling.
+- `frontend-patterns`: React-profile tasks only.
 
 ## Context routing
 
-- Use `.ai/commands/` for reusable task prompts. The `.ai/commands/pre-pr.md` procedure is mandatory before the supported PR path; `.ai/commands/post-pr-review.md` is mandatory after PR creation.
-- Use `.ai/agents/` for specialized agent instructions.
-- Use `.ai/skills/` for repeatable procedures.
-- Store generated PRDs, plans, summaries and reviews under `.ai/workspace/`.
-- Store QA inputs and outputs under `.ai/workspace/qa/`.
+- `.ai/commands/`: reusable task prompts. `/enforce-tdd` recovers the Red-Green-Refactor cycle, `/refactor` makes behavior-preserving changes after green, `/openspec-*` belong to the optional OpenSpec profile. `.ai/commands/pre-pr.md` is mandatory before the supported PR path; `.ai/commands/post-pr-review.md` is mandatory after PR creation.
+- `.ai/agents/`: specialized agent instructions. Review agents are read-only; the executor applies fixes only from an approved plan.
+- `.ai/skills/`: repeatable procedures.
+- `.ai/workspace/tasks/<task-id>/`: discovery, plan, progress, summary and review for one task (see `docs/task-workspace.md`). Pass these compact artifacts between phases instead of whole chat histories.
+- `.ai/workspace/qa/`: QA inputs and outputs for the current head.
+- `.ai/workspace/repo-analysis/`: `/repo-discovery` output.
+- `.ai/` is the canonical source. Vendor directories (`.cursor/`, `.codex/`, `.agents/`, `.github/instructions`, `.github/prompts`, `.github/copilot-instructions.md`, `.hermes/`) are generated; never edit them by hand.
 - Keep this file small. Move details to `docs/`.
 
-## Do not
-
-- Do not skip discovery for ambiguous work.
-- Do not implement without an approved plan.
-- Do not grow quality baselines automatically.
-- Do not use the same model for implementation and QA when another model is available.
-- Do not edit generated review reports to hide findings.
-- Do not mix feature work, refactoring and formatting in the same commit.
-
-
-## v0.4 Skill Policy
-
-- Use `xp-tdd-practices` for behavior changes.
-- Use `testing-standards` when writing or reviewing tests.
-- Use `git-strategy` for branches and commits.
-- Enable `frontend-patterns` only for React-profile tasks.
-- Review agents are read-only; fixes go through planner + executor.
-- This repository uses `pnpm`; do not introduce Bun-specific commands.
-
-
-## v0.5 Core Skills
-
-Use these skills when relevant:
-
-- `architecture-hexagonal`: module layout, dependency direction, ports/adapters, domain/application/infrastructure boundaries.
-- `design-principles`: naming, functions, classes/modules, comments, and error handling.
-- `xp-tdd-practices`: implementation cycle and TPP.
-- `testing-standards`: test naming, AAA, FIRST, pyramid, mocks, integration and E2E strategy.
-- `git-strategy`: feature branches, conventional commits, and commit-on-green discipline.
-
-## v0.5 Commands
-
-- `/enforce-tdd`: recover the Red-Green-Refactor cycle or apply TPP.
-- `/refactor`: behavior-preserving refactor after green.
-- `/openspec-*`: optional OpenSpec profile commands.
-
-Review agents are read-only. They produce findings. The executor applies fixes only from an approved plan.
-
-## v0.6 Vendor Adapters
-
-`.ai/` is the canonical source. Vendor directories are generated projections.
-
-Run after changing `.ai/`, `AGENTS.md`, or vendor sync logic:
-
-```bash
-pnpm ai:sync
-pnpm vendors:check
-```
-
-Generated targets:
-
-- Cursor: `.cursor/rules`, `.cursor/agents`, `.cursor/skills`, `.cursor/mcp.json`.
-- Codex: `.codex/config.toml`, `.codex/AGENTS.md`, `.agents/skills`.
-- GitHub Copilot: `.github/copilot-instructions.md`, `.github/instructions`, `.github/prompts`.
-- Hermes Agent: `.hermes/config.yaml`, `.hermes/skills`, `.hermes/AGENTS.md`, `.hermes/README.md`.
-
-Do not edit generated vendor files by hand. Edit the canonical source and regenerate.
-
-## v0.7.5 Repository Onboarding And Trust Model
-
-Use `/repo-discovery` before applying the workflow to an unfamiliar repository. It maps structure, validation commands, architecture, risks and suggested `AGENTS.md` updates under `.ai/workspace/repo-analysis/`.
-
-Trust is layered:
+## Trust layers
 
 1. Scope and artifact handoff.
 2. Deterministic checks.
@@ -126,5 +76,12 @@ Trust is layered:
 5. Cross-model QA.
 6. Human approval.
 
-Context is managed by artifacts. Do not pass entire chat histories between phases when a compact PRD, plan, summary or review artifact exists.
+## Do not
 
+- Do not skip discovery for ambiguous work.
+- Do not implement without an approved plan.
+- Do not grow quality baselines automatically.
+- Do not use the same model for implementation and QA, and do not invent model identities.
+- Do not edit generated review reports to hide findings.
+- Do not mix feature work, refactoring and formatting in the same commit.
+- Do not introduce Bun-specific commands; this repository uses `pnpm`.

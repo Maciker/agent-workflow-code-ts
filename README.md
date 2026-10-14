@@ -33,6 +33,23 @@ pnpm quality:fast       # typecheck + lint + test
 Point the workflow at your model provider with `AI_*` environment variables (see
 [`.env.example`](.env.example)); the AI client in `tools/ai/` is provider-agnostic.
 
+### What the full workflow needs
+
+- Node 20+ (CI runs 22 and 24), pnpm and git.
+- Access to two different models: one implements the change, another reviews it.
+  `pnpm prepr:gate` refuses a review recorded for the same `provider:model`.
+  The reviewer can run through `pnpm qa:run` (API key in `AI_QA_*`, usually paid
+  per request) or through a second model selected by hand in your agent tool.
+- For the post-PR review, access to the PR's checks, comments and reviews (for
+  example the GitHub CLI); see [post-PR review](docs/post-pr-review.md).
+- Cursor and Codex start the MCP servers in `.ai/mcp.json` through `npx`; see
+  [MCP](docs/mcp.md).
+
+Supported adapters are Cursor, Codex, GitHub Copilot, portable agentskills.io
+skills and Hermes Agent. Other agents, including Claude Code, have no generated
+adapter: they can read `AGENTS.md` and the `.ai/` documents directly, but skills,
+subagents and hooks are not projected for them.
+
 ## Repository layout
 
 ```text
@@ -78,7 +95,8 @@ pnpm vendors:check       # verify vendor adapters are in sync
 pnpm quality:vendor      # sync + vendor check
 pnpm quality:codex       # validate the Codex adapter
 pnpm qa:prepare          # build an exact-SHA cross-model QA input from the diff
-pnpm qa:record           # record verified implementer/reviewer model identities
+pnpm qa:run              # request the QA review from the AI_QA_* provider (harness evidence)
+pnpm qa:record           # record declared implementer/reviewer model identities
 pnpm qa:gate             # validate the QA review JSON
 pnpm prepr:gate          # strict deterministic + exact-SHA PR gate
 pnpm pr:review -- --input <post-pr-review-input.json> --report <post-pr-review-report.json>  # post-PR review state

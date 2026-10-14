@@ -72,6 +72,35 @@ describe("post-PR review state machine", () => {
     delete unpublished.publication;
     expect(run(unpublished).report.status).toBe("PENDING");
   });
+  it("blocks when required checks failed", () => {
+    const input = baseInput();
+    input.checks = { status: "failed", requiredCount: 1, items: [{ name: "quality", required: true, status: "completed", conclusion: "failure" }] };
+
+    const result = run(input);
+
+    expect(result.report.status).toBe("BLOCKED");
+    expect(result.report.reasons).toContain("required_check_failed");
+  });
+  it("blocks a complete check status that lists no required check", () => {
+    const input = baseInput();
+    input.checks = { status: "complete", requiredCount: 0, items: [] };
+
+    expect(run(input).report.reasons).toContain("required_check_evidence_missing");
+  });
+  it("requests changes for any blocking finding, including P3", () => {
+    const input = baseInput();
+    input.review.blocking_findings = [{ severity: "P3", file: "src/example.ts", problem: "Must fix before merge" }];
+
+    expect(run(input).report.status).toBe("CHANGES_REQUESTED");
+  });
+  it("evaluates the documented example input as pending until the review is published", () => {
+    const example = JSON.parse(readFileSync("examples/post-pr-review/input.example.json", "utf8")) as ReviewInput;
+
+    const result = run(example);
+
+    expect(result.report.status).toBe("PENDING");
+    expect(result.report.reasons).toContain("review_evidence_not_published");
+  });
   it("requests changes, then approves the corrected head after a fresh review", () => {
     const input = baseInput();
     input.review = { ...input.review, decision: "iterate", findings: [{ severity: "P1", file: "src/example.ts", line: 3, problem: "Missing guard", whyItMatters: "Invalid input fails", suggestedFix: "Add validation" }] };

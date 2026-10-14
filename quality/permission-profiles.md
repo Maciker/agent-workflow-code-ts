@@ -2,13 +2,13 @@
 
 ## discovery-writer
 
-Can read the project and write PRDs under `.ai/workspace/prds/`.
+Can read the project and write `discovery.md` under `.ai/workspace/tasks/<task-id>/`.
 Cannot edit production code or run mutating commands.
 
 ## planner
 
-Can read the project and write plans under `.ai/workspace/plans/`.
-Cannot edit production code or run mutating commands.
+Can read the project and write `plan.md` under `.ai/workspace/tasks/<task-id>/`.
+Cannot edit production code or run mutating commands. Cannot mark its own plan as approved.
 
 ## implementer
 
